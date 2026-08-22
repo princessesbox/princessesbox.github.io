@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PRINCESSES_BOX · Catálogo de Belleza</title>
-<meta name="princessesbox-build" content="catalogo-store-v5">
+<meta name="princessesbox-build" content="catalogo-editor-visual-v1">
 <meta name="description" content="Catálogo online de PRINCESSES_BOX: maquillaje, skincare, accesorios, uñas, pelo y más. Consultá productos y armá tu pedido por WhatsApp.">
 <meta name="theme-color" content="#C17F6A">
 <link rel="canonical" href="https://princessesbox.github.io/">
@@ -756,6 +756,72 @@
     .header-tool-chevron{font-size:.68rem;}
   }
 
+
+  /* ---------- modo editor visual ---------- */
+  .visual-editor-bar{
+    position:sticky; top:67px; z-index:48; margin:0; padding:10px 5vw;
+    background:rgba(74,55,51,.96); color:#fff; border-bottom:1px solid rgba(255,255,255,.12);
+    display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    box-shadow:0 10px 25px rgba(74,55,51,.16);
+  }
+  .visual-editor-left{display:flex;align-items:center;gap:10px;min-width:0;flex-wrap:wrap;}
+  .visual-editor-badge{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:.82rem;white-space:nowrap;}
+  .visual-editor-context{font-size:.76rem;color:#eadbd6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:360px;}
+  .visual-editor-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .visual-editor-btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:999px;
+    padding:8px 12px;font-size:.76rem;font-weight:650;background:#fff;color:var(--ink);border:1px solid rgba(255,255,255,.2);
+  }
+  .visual-editor-btn:hover{background:var(--blush);}
+  .visual-editor-btn.primary{background:var(--terracotta);color:#fff;border-color:var(--terracotta);}
+  .visual-editor-btn.exit{background:transparent;color:#fff;border-color:rgba(255,255,255,.42);}
+  .visual-editor-btn.exit:hover{background:rgba(255,255,255,.1);}
+
+  body.visual-editor-mode .product-card{outline:2px solid rgba(193,127,106,.22);outline-offset:2px;}
+  body.visual-editor-mode .product-card:hover{outline-color:var(--terracotta);}
+  .visual-card-actions{
+    display:none;position:absolute;right:9px;bottom:9px;z-index:8;gap:6px;
+    background:rgba(255,255,255,.94);padding:5px;border-radius:999px;box-shadow:0 7px 20px rgba(74,55,51,.18);
+  }
+  body.visual-editor-mode .visual-card-actions{display:flex;}
+  .visual-card-btn{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--blush);font-size:.9rem;}
+  .visual-card-btn:hover{background:var(--terracotta);color:#fff;}
+  .visual-card-btn.del:hover{background:#b85f5f;color:#fff;}
+
+  .editor-add-card{
+    min-height:245px;border:2px dashed var(--terracotta);border-radius:var(--radius);background:rgba(255,255,255,.72);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:9px;padding:24px;
+    color:var(--terracotta-dark);transition:transform .2s,background .2s,border-color .2s;
+  }
+  .editor-add-card:hover{transform:translateY(-3px);background:#fff;border-color:var(--terracotta-dark);}
+  .editor-add-card .plus{font-size:2rem;line-height:1;}
+  .editor-add-card strong{font-family:'Playfair Display',serif;font-size:1.1rem;}
+  .editor-add-card span:last-child{font-size:.76rem;color:var(--mauve);}
+
+  .admin-overlay.quick-product .admin-panel{width:min(820px,96vw);}
+  .admin-overlay.quick-product .admin-full-only{display:none !important;}
+  .admin-overlay.quick-product .admin-title-main::before{content:'✏️ ';}
+  .admin-overlay.quick-product .admin-title-main{font-size:1.25rem;}
+  .admin-overlay.quick-product .admin-sub-main{margin-bottom:18px;}
+
+  .editor-help{
+    display:none;margin:0 5vw 18px;padding:12px 15px;border-radius:13px;background:#fff7ef;
+    border:1px dashed #d6a879;color:var(--ink-soft);font-size:.78rem;text-align:center;
+  }
+  body.visual-editor-mode .editor-help{display:block;}
+
+  @media (max-width:620px){
+    .visual-editor-bar{top:58px;padding:8px 10px;gap:8px;}
+    .visual-editor-left{width:100%;justify-content:space-between;gap:6px;}
+    .visual-editor-context{max-width:55vw;font-size:.7rem;}
+    .visual-editor-actions{width:100%;display:grid;grid-template-columns:1fr 1fr auto;gap:6px;}
+    .visual-editor-btn{padding:8px 8px;font-size:.7rem;white-space:nowrap;}
+    .visual-editor-btn.exit{padding-inline:10px;}
+    .editor-add-card{min-height:200px;padding:16px 10px;}
+    .visual-card-actions{right:7px;bottom:7px;}
+    .visual-card-btn{width:32px;height:32px;}
+  }
+
 </style>
 </head>
 <body>
@@ -826,6 +892,18 @@
   </div>
 </header>
 
+<div class="visual-editor-bar hidden" id="visualEditorBar" aria-label="Modo editor del catálogo">
+  <div class="visual-editor-left">
+    <span class="visual-editor-badge">👑 Modo editor</span>
+    <span class="visual-editor-context" id="visualEditorContext">Editando catálogo</span>
+  </div>
+  <div class="visual-editor-actions">
+    <button type="button" class="visual-editor-btn primary" id="visualEditorAdd">➕ Nuevo aquí</button>
+    <button type="button" class="visual-editor-btn" id="visualEditorManage">⚙️ Administración</button>
+    <button type="button" class="visual-editor-btn exit" id="visualEditorExit">✓ Salir</button>
+  </div>
+</div>
+
 <section class="hero" id="inicio">
   <div class="hero-copy">
     <div class="hero-eyebrow">Bienvenida</div>
@@ -859,6 +937,8 @@
 
   <div class="cat-nav" id="catNav"></div>
 </section>
+
+<div class="editor-help" id="editorHelp">👑 Estás viendo el catálogo como administrador. Elegí una categoría y usá <strong>“Nuevo aquí”</strong>, o tocá ✏️ en cualquier producto para editarlo.</div>
 
 <section class="catalogo" id="catalogo">
   <div class="products-grid" id="productsGrid"></div>
@@ -946,8 +1026,8 @@
 <div class="admin-overlay hidden" id="adminOverlay">
   <div class="admin-panel">
     <button class="admin-close" id="adminCloseBtn">✕</button>
-    <div class="admin-title">⚙️ Administrar catálogo</div>
-    <div class="admin-sub">Agregá, editá o eliminá productos. Los datos se guardan en Firestore y las fotos/videos se suben a Google Drive.</div>
+    <div class="admin-title admin-title-main">Administrar catálogo</div>
+    <div class="admin-sub admin-sub-main">Editá este producto sin salir de la vista del catálogo. Los cambios se guardan automáticamente en Firestore.</div>
 
     <form class="admin-form" id="productForm">
       <input type="hidden" id="editId">
@@ -1040,10 +1120,10 @@
       </div>
     </form>
 
-    <div class="admin-title" style="font-size:1.05rem;">Tus productos (<span id="countProducts">0</span>)</div>
-    <div class="admin-list" id="adminList" style="margin-top:14px;"></div>
+    <div class="admin-title admin-full-only" style="font-size:1.05rem;">Tus productos (<span id="countProducts">0</span>)</div>
+    <div class="admin-list admin-full-only" id="adminList" style="margin-top:14px;"></div>
 
-    <div class="admin-section">
+    <div class="admin-section admin-full-only">
       <div class="admin-title" style="font-size:1.05rem;">🗂️ Categorías</div>
       <div class="admin-sub" style="margin-bottom:14px;">Agregá, renombrá, borrá o reordená tus categorías. El orden acá define el orden de los botones en la página.</div>
       <div class="cat-manager" id="catManager"></div>
@@ -1054,7 +1134,7 @@
       </div>
     </div>
 
-    <div class="admin-section">
+    <div class="admin-section admin-full-only">
       <div class="admin-title" style="font-size:1.05rem;">✏️ Textos del sitio</div>
       <div class="admin-sub" style="margin-bottom:14px;">Editá las frases de la página de inicio.</div>
       <div class="text-form" id="textForm">
@@ -1095,7 +1175,7 @@
       </div>
     </div>
 
-    <div class="publish-box">
+    <div class="publish-box admin-full-only">
       <div class="publish-title">🚀 ¿Ya terminaste de editar?</div>
       <p>Los datos de productos se guardan en Firestore y las fotos/videos en Google Drive. Todo se actualiza automáticamente para tus clientes.</p>
       <button type="button" class="btn btn-primary" id="publishBtn" style="justify-content:center;">☁️ Cambios automáticos con Firestore</button>
@@ -1323,6 +1403,7 @@ function compareCatalogProducts(a,b){
 /* ---------- render categorías ---------- */
 function selectCategory(catId, {scroll=true} = {}){
   activeCategory = catId || "todos";
+  updateVisualEditorContext();
   // Elegir una categoría vuelve a la navegación por categorías y limpia una búsqueda anterior.
   if(searchTerm) setSearchTerm("", {focusMain:false});
   renderCatNav();
@@ -1399,12 +1480,19 @@ function renderGrid(){
     else summary.textContent = `${list.length} producto${list.length===1?'':'s'}${filterNames[catalogFilter]||""}`;
   }
 
+  const editorAddCard = visualEditorMode ? (()=>{
+    const target = editorTargetCategory();
+    const label = activeCategory === "todos" ? "Nuevo producto" : `Agregar en ${catLabel(target)}`;
+    const hint = activeCategory === "todos" ? "Elegí la categoría en el formulario" : `La categoría ${catLabel(target)} se selecciona automáticamente`;
+    return `<button type="button" class="editor-add-card" data-editor-add-card="1"><span class="plus">＋</span><strong>${safeText(label)}</strong><span>${safeText(hint)}</span></button>`;
+  })() : "";
+
   if(list.length===0){
-    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">No encontramos productos con esa búsqueda. 🎀<br>Probá con otro nombre o elegí “Todos”.</div>`;
+    grid.innerHTML = `${editorAddCard}<div class="empty-state" style="grid-column:${visualEditorMode?'auto':'1/-1'};">No encontramos productos con esa búsqueda. 🎀<br>${visualEditorMode?'Podés crear uno nuevo desde aquí.':'Probá con otro nombre o elegí “Todos”.'}</div>`;
     return;
   }
 
-  grid.innerHTML = list.map(p => {
+  grid.innerHTML = editorAddCard + list.map(p => {
     const imgs = (p.images && p.images.length) ? p.images : (p.image ? [p.image] : []);
     const hasMulti = imgs.length > 1;
     const oldPrice = Number(p.precioAnterior || 0);
@@ -1415,6 +1503,10 @@ function renderGrid(){
     const firstAvailableTone = tones.find(t=>toneIsAvailable(p,t)) || tones[0] || "";
     return `
     <article class="product-card ${available?'':'agotado'}" id="producto-${safeText(p.id)}">
+      <div class="visual-card-actions" aria-label="Acciones de edición">
+        <button type="button" class="visual-card-btn" data-visual-edit="${safeText(p.id)}" title="Editar producto" aria-label="Editar ${safeText(p.name)}">✏️</button>
+        <button type="button" class="visual-card-btn del" data-visual-delete="${safeText(p.id)}" title="Eliminar producto" aria-label="Eliminar ${safeText(p.name)}">🗑️</button>
+      </div>
       <div class="product-media" data-total="${imgs.length}" data-product-id="${safeText(p.id)}">
         <div class="badge-stack">
           ${p.featured ? `<span class="badge-destacado">⭐ Destacado</span>` : ""}
@@ -1476,6 +1568,24 @@ function moveMedia(media, dir){
 }
 
 document.getElementById("productsGrid").addEventListener("click", (e)=>{
+  const addCard = e.target.closest("[data-editor-add-card]");
+  if(addCard && visualEditorMode){
+    e.preventDefault(); e.stopPropagation();
+    openQuickProductEditor("", editorTargetCategory());
+    return;
+  }
+  const visualEdit = e.target.closest("[data-visual-edit]");
+  if(visualEdit && visualEditorMode){
+    e.preventDefault(); e.stopPropagation();
+    openQuickProductEditor(visualEdit.dataset.visualEdit);
+    return;
+  }
+  const visualDelete = e.target.closest("[data-visual-delete]");
+  if(visualDelete && visualEditorMode){
+    e.preventDefault(); e.stopPropagation();
+    deleteProduct(visualDelete.dataset.visualDelete);
+    return;
+  }
   const nav = e.target.closest(".pm-nav");
   if(nav){
     e.preventDefault(); e.stopPropagation();
@@ -1827,6 +1937,38 @@ adminFab.addEventListener("click", ()=>{
 document.getElementById("pinCancel").addEventListener("click", ()=> pinOverlay.classList.add("hidden"));
 document.getElementById("pinSubmit").addEventListener("click", checkPin);
 pinInput.addEventListener("keydown", e=>{ if(e.key==="Enter") checkPin(); });
+let visualEditorMode = false;
+let adminPanelMode = "full";
+const visualEditorBar = document.getElementById("visualEditorBar");
+const visualEditorContext = document.getElementById("visualEditorContext");
+
+function editorTargetCategory(){
+  if(activeCategory !== "todos" && categories.some(c=>c.id===activeCategory)) return activeCategory;
+  return categories[0]?.id || "";
+}
+function updateVisualEditorContext(){
+  if(!visualEditorContext) return;
+  const label = activeCategory === "todos" ? "Todos los productos" : catLabel(activeCategory);
+  visualEditorContext.textContent = `Viendo: ${label}`;
+}
+function enterVisualEditor(){
+  visualEditorMode = true;
+  document.body.classList.add("visual-editor-mode");
+  visualEditorBar?.classList.remove("hidden");
+  updateVisualEditorContext();
+  renderGrid();
+  document.getElementById("catalogo")?.scrollIntoView({behavior:"smooth", block:"start"});
+}
+function exitVisualEditor(){
+  visualEditorMode = false;
+  document.body.classList.remove("visual-editor-mode");
+  visualEditorBar?.classList.add("hidden");
+  adminOverlay.classList.add("hidden");
+  adminOverlay.classList.remove("quick-product");
+  adminPanelMode = "full";
+  resetForm();
+  renderGrid();
+}
 function checkPin(){
   if(pinInput.value !== ADMIN_PIN){
     pinError.textContent = "PIN incorrecto, probá de nuevo.";
@@ -1837,21 +1979,59 @@ function checkPin(){
     return;
   }
   pinOverlay.classList.add("hidden");
-  openAdmin();
+  enterVisualEditor();
 }
-document.getElementById("adminCloseBtn").addEventListener("click", ()=> adminOverlay.classList.add("hidden"));
+function closeAdminOverlay(){
+  adminOverlay.classList.add("hidden");
+  adminOverlay.classList.remove("quick-product");
+  adminPanelMode = "full";
+  resetForm();
+}
+document.getElementById("adminCloseBtn").addEventListener("click", closeAdminOverlay);
+adminOverlay.addEventListener("click", e=>{ if(e.target===adminOverlay && adminPanelMode==="quick") closeAdminOverlay(); });
+
+document.getElementById("visualEditorExit")?.addEventListener("click", exitVisualEditor);
+document.getElementById("visualEditorManage")?.addEventListener("click", ()=>openAdmin("full"));
+document.getElementById("visualEditorAdd")?.addEventListener("click", ()=>openQuickProductEditor("", editorTargetCategory()));
 
 function fillCategorySelect(){
   const sel = document.getElementById("fCategory");
   sel.innerHTML = categories.map(c=>`<option value="${c.id}">${c.icon} ${c.label}</option>`).join("");
 }
 
-function openAdmin(){
+function openAdmin(mode="full"){
+  adminPanelMode = mode;
+  adminOverlay.classList.toggle("quick-product", mode === "quick");
   fillCategorySelect();
   renderAdminList();
   renderCatManager();
   fillTextForm();
+  if(mode === "full"){
+    document.querySelector(".admin-title-main").textContent = "⚙️ Administración completa";
+    document.querySelector(".admin-sub-main").textContent = "Gestioná productos, categorías y textos. Al cerrar, seguís en el modo editor visual.";
+  }
   adminOverlay.classList.remove("hidden");
+}
+function openQuickProductEditor(id="", categoryId=""){
+  adminPanelMode = "quick";
+  adminOverlay.classList.add("quick-product");
+  fillCategorySelect();
+  resetForm();
+  const title = document.querySelector(".admin-title-main");
+  const sub = document.querySelector(".admin-sub-main");
+  if(id){
+    if(title) title.textContent = "Editar producto";
+    if(sub) sub.textContent = "Hacé los cambios y guardalos. Después volvés al catálogo manteniendo el modo editor.";
+    loadIntoForm(id);
+  }else{
+    const target = categoryId || editorTargetCategory();
+    if(target) document.getElementById("fCategory").value = target;
+    if(title) title.textContent = activeCategory !== "todos" ? `Nuevo producto en ${catLabel(target)}` : "Nuevo producto";
+    if(sub) sub.textContent = "Cargá nombre, precio, fotos/video, tonos y stock. La categoría actual ya queda seleccionada.";
+    document.getElementById("saveBtnLabel").textContent = "➕ Agregar producto";
+  }
+  adminOverlay.classList.remove("hidden");
+  setTimeout(()=>document.getElementById("fName")?.focus(),80);
 }
 
 function renderAdminList(){
@@ -2288,14 +2468,23 @@ form.addEventListener("submit", async e => {
   };
   if(!firestoreData.nombre){ alert("Poné un nombre para el producto 💕"); return; }
   try{
+    let savedId = id;
     if(id){
       await updateDoc(doc(db,"productos",id), firestoreData);
       alert("✅ Producto actualizado y visible para tus clientes.");
     }else{
-      await addDoc(collection(db,"productos"), firestoreData);
+      const ref = await addDoc(collection(db,"productos"), firestoreData);
+      savedId = ref.id;
       alert("✅ Producto agregado y visible para tus clientes.");
     }
+    const wasQuick = adminPanelMode === "quick";
     resetForm();
+    if(wasQuick){
+      adminOverlay.classList.add("hidden");
+      adminOverlay.classList.remove("quick-product");
+      adminPanelMode = "full";
+      setTimeout(()=>document.getElementById(`producto-${savedId}`)?.scrollIntoView({behavior:"smooth",block:"center"}),450);
+    }
   }catch(error){
     console.error(error);
     alert("No se pudo guardar en Firestore.\n\n" + error.message);
