@@ -99,6 +99,51 @@
   .social-ico:hover{background:var(--terracotta); transform:translateY(-2px);}
   .nav-toggle{display:none;}
 
+  /* ---------- accesos rápidos del encabezado ---------- */
+  .header-right{display:flex;align-items:center;gap:18px;min-width:0;}
+  .header-tools{display:flex;align-items:center;gap:8px;position:relative;}
+  .header-cat-menu,.header-search-menu{position:relative;}
+  .header-tool-btn,.header-icon-btn{
+    height:40px;display:inline-flex;align-items:center;justify-content:center;gap:7px;
+    border:1px solid var(--blush-deep);background:#fff;color:var(--ink-soft);
+    border-radius:999px;box-shadow:0 6px 18px -14px rgba(74,55,51,.5);
+    transition:all .2s;
+  }
+  .header-tool-btn{padding:0 13px;font-size:.8rem;font-weight:600;white-space:nowrap;}
+  .header-icon-btn{width:40px;font-size:1.05rem;}
+  .header-tool-btn:hover,.header-icon-btn:hover,.header-tool-btn.active,.header-icon-btn.active{
+    border-color:var(--terracotta);background:var(--blush);color:var(--terracotta-dark);
+  }
+  .header-tool-chevron{font-size:.65rem;transition:transform .2s;}
+  .header-tool-btn[aria-expanded="true"] .header-tool-chevron{transform:rotate(180deg);}
+  .header-popover{
+    position:absolute;top:calc(100% + 11px);right:0;z-index:85;
+    background:rgba(255,253,251,.98);border:1px solid var(--blush-deep);border-radius:16px;
+    box-shadow:0 18px 46px -18px rgba(74,55,51,.42);padding:10px;
+    backdrop-filter:blur(12px);
+  }
+  .header-popover::before{
+    content:"";position:absolute;right:18px;top:-7px;width:13px;height:13px;
+    background:var(--cream);border-left:1px solid var(--blush-deep);border-top:1px solid var(--blush-deep);
+    transform:rotate(45deg);
+  }
+  .header-cat-dropdown{width:min(310px,calc(100vw - 24px));max-height:min(430px,70vh);overflow:auto;}
+  .header-cat-title{padding:6px 8px 9px;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mauve);}
+  .header-cat-item{
+    width:100%;display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:8px;
+    text-align:left;padding:10px 10px;border-radius:11px;color:var(--ink-soft);font-size:.84rem;
+  }
+  .header-cat-item:hover{background:var(--blush);color:var(--terracotta-dark);}
+  .header-cat-item.active{background:var(--blush-deep);color:var(--terracotta-dark);font-weight:600;}
+  .header-cat-icon{font-size:1rem;text-align:center;}
+  .header-cat-count{font-size:.68rem;color:var(--mauve);background:#fff;border:1px solid var(--blush-deep);border-radius:999px;padding:2px 7px;}
+  .header-search-popover{width:min(430px,calc(100vw - 24px));padding:12px;}
+  .header-search-wrap{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--blush-deep);border-radius:999px;padding:5px 7px 5px 14px;}
+  .header-search-wrap input{flex:1;min-width:0;border:none;outline:none;background:transparent;color:var(--ink);font-family:inherit;font-size:.9rem;padding:7px 0;}
+  .header-search-clear{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--mauve);}
+  .header-search-clear:hover{background:var(--blush);}
+  .header-search-summary{font-size:.72rem;color:var(--mauve);padding:8px 6px 2px;min-height:25px;}
+
   /* ---------- hero ---------- */
   .hero{
     position:relative;
@@ -280,6 +325,11 @@
   }
   .btn-wsp:hover{background:#1ebd59;}
   .btn-wsp[disabled]{background:var(--grey); pointer-events:none;}
+  .btn-video{
+    width:100%; justify-content:center; display:flex; align-items:center; gap:8px;
+    background:var(--ink); color:#fff; padding:10px 14px; border-radius:12px; font-size:.82rem; font-weight:600;
+  }
+  .btn-video:hover{background:var(--terracotta-dark);}
 
   /* ---------- about strip ---------- */
   .about-strip{
@@ -373,13 +423,23 @@
     border:1px solid var(--blush-deep); border-radius:14px; overflow:hidden; background:var(--blush);
   }
   .drive-uploader-frame{
-    width:100%; height:245px; border:0; display:block; background:var(--blush);
+    width:100%; height:390px; border:0; display:block; background:var(--blush);
   }
   .drive-upload-status{
     margin-top:8px; min-height:18px; font-size:0.76rem; color:var(--mauve);
   }
   .drive-upload-status.ok{color:var(--green);}
   .drive-upload-status.err{color:#c0554e;}
+  .video-admin-card{
+    margin-top:10px; padding:11px 12px; border:1px solid var(--blush-deep); border-radius:12px;
+    background:#fff; display:flex; align-items:center; gap:10px; min-height:46px;
+  }
+  .video-admin-card .video-admin-info{flex:1; min-width:0; font-size:.78rem; color:var(--ink-soft);}
+  .video-admin-card .video-admin-info strong{display:block; color:var(--ink); font-size:.82rem; margin-bottom:2px;}
+  .video-admin-card .video-admin-remove{
+    border:1px solid #d8b2aa; color:#b65d5d; background:#fff; padding:7px 10px; border-radius:9px; font-size:.74rem;
+  }
+  .video-admin-card.empty .video-admin-remove{display:none;}
   .form-actions{grid-column:1/-1; display:flex; gap:12px; margin-top:6px;}
   .btn-save{background:var(--terracotta); color:#fff; padding:11px 22px; border-radius:10px; font-size:0.85rem;}
   .btn-cancel{background:transparent; color:var(--mauve); padding:11px 22px; border-radius:10px; font-size:0.85rem; border:1px solid var(--mauve-light);}
@@ -455,6 +515,7 @@
     .hero-visual .ring.r2{width:200px; height:200px;}
     .about-strip{grid-template-columns:1fr;}
     .site-nav{display:none;}
+    .header-right{gap:8px;}
     .admin-form{grid-template-columns:1fr;}
   }
 
@@ -573,6 +634,25 @@
   .lightbox-nav.prev{left:8px}.lightbox-nav.next{right:8px}
   .lightbox-caption{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);background:rgba(32,24,22,.72);color:#fff;padding:7px 12px;border-radius:999px;font-size:.75rem;max-width:80%;text-align:center;}
 
+  /* ---------- visor de video ---------- */
+  .video-modal{
+    position:fixed; inset:0; z-index:145; background:rgba(32,24,22,.92);
+    display:flex; align-items:center; justify-content:center; padding:20px;
+  }
+  .video-modal-inner{
+    width:min(760px,96vw); background:#111; border-radius:18px; overflow:hidden; position:relative;
+    box-shadow:0 24px 70px rgba(0,0,0,.45);
+  }
+  .video-modal-head{
+    display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 14px;
+    background:#fff; color:var(--ink);
+  }
+  .video-modal-title{font-family:'Playfair Display',serif;font-weight:600;font-size:1rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .video-modal-close{width:36px;height:36px;border-radius:50%;background:var(--blush);color:var(--ink);font-size:1.1rem;flex:0 0 auto;}
+  .video-frame-wrap{position:relative; width:100%; aspect-ratio:9/16; max-height:78vh; background:#000;}
+  .video-frame{position:absolute; inset:0; width:100%; height:100%; border:0; background:#000;}
+  @media (min-width:700px){.video-frame-wrap{aspect-ratio:16/9;}}
+
   /* ---------- información comercial ---------- */
   .about-copy-kicker{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mauve);margin-top:18px;margin-bottom:8px;}
 
@@ -580,18 +660,30 @@
     .pm-nav{opacity:1;}
   }
   @media (max-width:620px){
+    .site-header{padding:8px 12px;}
+    .brand{gap:8px;}
+    .brand img{width:42px;height:42px;}
+    .brand-name{font-size:.92rem;letter-spacing:.035em;}
+    .brand-tag{display:none;}
+    .header-tool-btn{height:38px;padding:0 11px;font-size:.76rem;}
+    .header-icon-btn{width:38px;height:38px;}
     .catalog-tools{padding:0 4vw;}
     .products-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
     .product-body{padding:13px 12px 14px;gap:6px;}
     .product-name{font-size:1rem;}
     .product-desc{font-size:.78rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
     .product-price{font-size:1.08rem;}
-    .btn-order,.btn-wsp,.btn-soldout{font-size:.75rem;padding:9px 8px;}
+    .btn-order,.btn-wsp,.btn-video,.btn-soldout{font-size:.75rem;padding:9px 8px;}
     .badge-stack{top:8px;left:8px;gap:4px;}
     .badge-nuevo,.badge-oferta,.badge-destacado{font-size:.56rem;padding:4px 7px;}
     .badge-estado{top:8px;right:8px;font-size:.56rem;padding:4px 7px;}
     .pm-nav{width:31px;height:31px;}
     .cart-fab{right:14px;bottom:14px;padding:11px 14px;}
+  }
+  @media (max-width:430px){
+    .brand-name{display:none;}
+    .header-tool-label{font-size:.74rem;}
+    .header-tool-btn{padding:0 10px;}
   }
 
 </style>
@@ -606,16 +698,37 @@
       <div class="brand-tag">Productos de belleza</div>
     </div>
   </div>
-  <nav class="site-nav">
-    <a href="#inicio">Inicio</a>
-    <a href="#catalogo">Catálogo</a>
-    <a href="#nosotros">Nosotros</a>
-    <a href="#contacto">Contacto</a>
-    <span class="nav-social">
-      <a href="#" id="igLinkNav" target="_blank" rel="noopener" aria-label="Instagram" class="social-ico">📸</a>
-      <a href="#" id="ttLinkNav" target="_blank" rel="noopener" aria-label="TikTok" class="social-ico">🎵</a>
-    </span>
-  </nav>
+  <div class="header-right">
+    <nav class="site-nav">
+      <a href="#inicio">Inicio</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a>
+      <span class="nav-social">
+        <a href="#" id="igLinkNav" target="_blank" rel="noopener" aria-label="Instagram" class="social-ico">📸</a>
+        <a href="#" id="ttLinkNav" target="_blank" rel="noopener" aria-label="TikTok" class="social-ico">🎵</a>
+      </span>
+    </nav>
+    <div class="header-tools" aria-label="Herramientas del catálogo">
+      <div class="header-cat-menu">
+        <button type="button" class="header-tool-btn" id="headerCatBtn" aria-expanded="false" aria-controls="headerCatDropdown">
+          <span>🗂️</span><span class="header-tool-label">Categorías</span><span class="header-tool-chevron">▾</span>
+        </button>
+        <div class="header-popover header-cat-dropdown hidden" id="headerCatDropdown"></div>
+      </div>
+      <div class="header-search-menu">
+        <button type="button" class="header-icon-btn" id="headerSearchBtn" aria-expanded="false" aria-controls="headerSearchPopover" aria-label="Buscar productos" title="Buscar productos">🔎</button>
+        <div class="header-popover header-search-popover hidden" id="headerSearchPopover">
+          <div class="header-search-wrap">
+            <span aria-hidden="true">🔎</span>
+            <input type="search" id="headerProductSearch" autocomplete="off" placeholder="Buscar producto..." aria-label="Buscar productos desde el encabezado">
+            <button type="button" class="header-search-clear hidden" id="headerSearchClear" aria-label="Limpiar búsqueda">✕</button>
+          </div>
+          <div class="header-search-summary" id="headerSearchSummary">Escribí el nombre, categoría, tono o código.</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </header>
 
 <section class="hero" id="inicio">
@@ -707,6 +820,19 @@
   </div>
 </div>
 
+<!-- Visor de video del producto -->
+<div class="video-modal hidden" id="productVideoModal" aria-hidden="true">
+  <div class="video-modal-inner" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle">
+    <div class="video-modal-head">
+      <div class="video-modal-title" id="videoModalTitle">Video del producto</div>
+      <button type="button" class="video-modal-close" id="videoModalClose" aria-label="Cerrar video">✕</button>
+    </div>
+    <div class="video-frame-wrap">
+      <iframe class="video-frame" id="productVideoFrame" src="" allow="autoplay; fullscreen" allowfullscreen title="Video del producto"></iframe>
+    </div>
+  </div>
+</div>
+
 <!-- Acceso de administración oculto en el logo redondo superior -->
 
 <div class="admin-overlay hidden" id="pinOverlay">
@@ -725,7 +851,7 @@
   <div class="admin-panel">
     <button class="admin-close" id="adminCloseBtn">✕</button>
     <div class="admin-title">⚙️ Administrar catálogo</div>
-    <div class="admin-sub">Agregá, editá o eliminá productos. Los datos se guardan en Firestore y las fotos se suben a Google Drive.</div>
+    <div class="admin-sub">Agregá, editá o eliminá productos. Los datos se guardan en Firestore y las fotos/videos se suben a Google Drive.</div>
 
     <form class="admin-form" id="productForm">
       <input type="hidden" id="editId">
@@ -757,7 +883,7 @@
         </div>
       </div>
       <div class="field full">
-        <label>Fotos del producto (podés agregar varias)</label>
+        <label>Fotos y video del producto</label>
         <div id="imgGallery" class="img-gallery"></div>
         <div class="img-tabs">
           <button type="button" class="img-tab active" data-mode="file">☁️ Subir a Google Drive</button>
@@ -765,9 +891,13 @@
         </div>
         <div id="imgModeFile">
           <div class="drive-uploader-wrap">
-            <iframe id="driveUploaderFrame" class="drive-uploader-frame" src="https://script.google.com/macros/s/AKfycby7upvtYD-qjsEeyBj3nZGUTmJgxF6SDf_XQBx6eZFK4kY5q47PegQK6uHtA7n4fKhkBg/exec" title="Subir fotos a Google Drive" loading="lazy"></iframe>
+            <iframe id="driveUploaderFrame" class="drive-uploader-frame" src="https://script.google.com/macros/s/AKfycby7upvtYD-qjsEeyBj3nZGUTmJgxF6SDf_XQBx6eZFK4kY5q47PegQK6uHtA7n4fKhkBg/exec" title="Subir fotos y video a Google Drive" loading="lazy"></iframe>
           </div>
-          <div id="driveUploadStatus" class="drive-upload-status">Elegí una o varias fotos dentro del recuadro y tocá “Subir imágenes”. Cuando termine, aparecerán arriba como miniaturas.</div>
+          <div id="driveUploadStatus" class="drive-upload-status">Elegí fotos y, si querés, un video dentro del recuadro. Las fotos aparecerán arriba y el video quedará asociado al producto.</div>
+          <div id="videoAdminCard" class="video-admin-card empty">
+            <div class="video-admin-info" id="videoAdminInfo"><strong>🎬 Video opcional</strong>Este producto todavía no tiene video.</div>
+            <button type="button" class="video-admin-remove" id="removeVideoBtn">Quitar video</button>
+          </div>
         </div>
         <div id="imgModeUrl" class="hidden">
           <input type="text" id="fImage" placeholder="https://...">
@@ -865,7 +995,7 @@
 
     <div class="publish-box">
       <div class="publish-title">🚀 ¿Ya terminaste de editar?</div>
-      <p>Los datos de productos se guardan en Firestore y las fotos en Google Drive. Todo se actualiza automáticamente para tus clientes.</p>
+      <p>Los datos de productos se guardan en Firestore y las fotos/videos en Google Drive. Todo se actualiza automáticamente para tus clientes.</p>
       <button type="button" class="btn btn-primary" id="publishBtn" style="justify-content:center;">☁️ Cambios automáticos con Firestore</button>
     </div>
   </div>
@@ -877,10 +1007,10 @@
    ========================================================= */
 const WHATSAPP_NUMBER = "5491130271298";     // tu número de WhatsApp con código de país
 const ADMIN_PIN = "123098";                   // PIN para entrar al panel de administración
-const DRIVE_UPLOADER_URL = "https://script.google.com/macros/s/AKfycby7upvtYD-qjsEeyBj3nZGUTmJgxF6SDf_XQBx6eZFK4kY5q47PegQK6uHtA7n4fKhkBg/exec"; // Google Apps Script para subir fotos a Drive
+const DRIVE_UPLOADER_URL = "https://script.google.com/macros/s/AKfycby7upvtYD-qjsEeyBj3nZGUTmJgxF6SDf_XQBx6eZFK4kY5q47PegQK6uHtA7n4fKhkBg/exec"; // Google Apps Script para subir fotos y video a Drive
 const INSTAGRAM_URL = "https://www.instagram.com/princesses_boxx?igsh=MTVwNmU5c3JiNHF0dA==";
 const TIKTOK_URL = "https://vm.tiktok.com/ZS9kMBMLv3sBC-nyeRD/";
-const BUILD_VERSION = "b5-store";
+const BUILD_VERSION = "b7-video";
 /* Estas son las categorías que se ven la PRIMERA vez que entra alguien al link.
    Se sincronizan con Firestore. Podés administrarlas desde el panel
    (para eso está la sección "Categorías" dentro del panel). */
@@ -962,6 +1092,7 @@ function iniciarProductosFirestore(){
         oferta: !!x.oferta,        precioAnterior: Number(x.precioAnterior ?? 0),
         orden: Number(x.orden ?? 9999),
         images: Array.isArray(x.imagenes) ? x.imagenes : [],
+        videoId: String(x.videoId || "").trim(),
         tones: Array.isArray(x.tonos) ? x.tonos.map(v=>String(v).trim()).filter(Boolean) : []
       };
     });
@@ -969,6 +1100,7 @@ function iniciarProductosFirestore(){
     renderGrid();
     renderAdminList();
     renderCatManager();
+    renderHeaderCategories();
     renderCart();
     console.log("🔥 Productos recibidos desde Firestore:", products.length);
   }, error => console.error("Error leyendo productos de Firestore:", error));
@@ -1003,6 +1135,35 @@ function productSortRank(p){
 
 
 /* ---------- render categorías ---------- */
+function selectCategory(catId, {scroll=true} = {}){
+  activeCategory = catId || "todos";
+  // Elegir una categoría vuelve a la navegación por categorías y limpia una búsqueda anterior.
+  if(searchTerm) setSearchTerm("", {focusMain:false});
+  renderCatNav();
+  renderGrid();
+  closeHeaderPopovers();
+  if(scroll) document.getElementById("catalogo")?.scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function renderHeaderCategories(){
+  const menu = document.getElementById("headerCatDropdown");
+  if(!menu) return;
+  const all = [{id:"todos", label:"Todos", icon:"🌸"}, ...categories];
+  menu.innerHTML = `
+    <div class="header-cat-title">Explorar por categoría</div>
+    ${all.map(c=>{
+      const count = c.id === "todos" ? products.length : products.filter(p=>p.category===c.id).length;
+      return `<button type="button" class="header-cat-item ${activeCategory===c.id?'active':''}" data-header-cat="${safeText(c.id)}">
+        <span class="header-cat-icon">${c.icon}</span>
+        <span>${safeText(c.label)}</span>
+        <span class="header-cat-count">${count}</span>
+      </button>`;
+    }).join("")}`;
+  menu.querySelectorAll("[data-header-cat]").forEach(btn=>{
+    btn.addEventListener("click", ()=>selectCategory(btn.dataset.headerCat));
+  });
+}
+
 function renderCatNav(){
   const nav = document.getElementById("catNav");
   const all = [{id:"todos", label:"Todos", icon:"🌸"}, ...categories];
@@ -1012,12 +1173,9 @@ function renderCatNav(){
     </button>
   `).join("");
   nav.querySelectorAll(".cat-pill").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      activeCategory = btn.dataset.cat;
-      renderCatNav();
-      renderGrid();
-    });
+    btn.addEventListener("click", ()=>selectCategory(btn.dataset.cat, {scroll:false}));
   });
+  renderHeaderCategories();
 }
 
 /* ---------- link + mensaje de WhatsApp por producto ---------- */
@@ -1102,6 +1260,7 @@ function renderGrid(){
           <div class="tone-preview">${tones.slice(0,8).map(t=>`<span>${safeText(t)}</span>`).join("")}${tones.length>8?`<span>+${tones.length-8}</span>`:""}</div>
         </div>` : ""}
         <div class="product-actions">
+          ${p.videoId ? `<button type="button" class="btn-video" data-video-product="${safeText(p.id)}">▶ Ver video</button>` : ""}
           ${available ? `
             <button type="button" class="btn-order" data-add-order="${safeText(p.id)}">🛍️ + Agregar al pedido</button>
             <a class="btn btn-wsp" href="${wspLinkFor(p)}" data-wsp-product="${safeText(p.id)}" target="_blank" rel="noopener">💬 Consultar por WhatsApp</a>
@@ -1131,6 +1290,12 @@ document.getElementById("productsGrid").addEventListener("click", (e)=>{
   if(nav){
     e.preventDefault(); e.stopPropagation();
     moveMedia(nav.closest(".product-media"), Number(nav.dataset.dir));
+    return;
+  }
+  const videoBtn = e.target.closest("[data-video-product]");
+  if(videoBtn){
+    e.preventDefault(); e.stopPropagation();
+    openProductVideo(videoBtn.dataset.videoProduct);
     return;
   }
   const add = e.target.closest("[data-add-order]");
@@ -1219,18 +1384,106 @@ document.addEventListener("keydown", e=>{
   if(e.key === "ArrowRight"){ lightboxIndex++; renderLightbox(); }
 });
 
-/* ---------- buscador ---------- */
+/* ---------- video por producto ---------- */
+function driveVideoPreviewUrl(fileId){
+  return `https://drive.google.com/file/d/${encodeURIComponent(fileId)}/preview`;
+}
+function openProductVideo(productId){
+  const p = products.find(x=>x.id===productId);
+  if(!p || !p.videoId) return;
+  document.getElementById("videoModalTitle").textContent = `🎬 ${p.name}`;
+  document.getElementById("productVideoFrame").src = driveVideoPreviewUrl(p.videoId);
+  document.getElementById("productVideoModal").classList.remove("hidden");
+  document.getElementById("productVideoModal").setAttribute("aria-hidden","false");
+  document.body.style.overflow = "hidden";
+}
+function closeProductVideo(){
+  const modal = document.getElementById("productVideoModal");
+  modal.classList.add("hidden");
+  modal.setAttribute("aria-hidden","true");
+  document.getElementById("productVideoFrame").src = ""; // detiene la reproducción
+  document.body.style.overflow = "";
+}
+document.getElementById("videoModalClose").addEventListener("click", closeProductVideo);
+document.getElementById("productVideoModal").addEventListener("click", e=>{ if(e.target.id==="productVideoModal") closeProductVideo(); });
+document.addEventListener("keydown", e=>{
+  if(e.key === "Escape" && !document.getElementById("productVideoModal").classList.contains("hidden")) closeProductVideo();
+});
+
+/* ---------- buscador + accesos del encabezado ---------- */
 const productSearch = document.getElementById("productSearch");
 const clearSearch = document.getElementById("clearSearch");
-productSearch.addEventListener("input", ()=>{
-  searchTerm = productSearch.value.trim();
-  clearSearch.classList.toggle("hidden", !searchTerm);
+const headerProductSearch = document.getElementById("headerProductSearch");
+const headerSearchClear = document.getElementById("headerSearchClear");
+const headerSearchSummary = document.getElementById("headerSearchSummary");
+const headerSearchBtn = document.getElementById("headerSearchBtn");
+const headerSearchPopover = document.getElementById("headerSearchPopover");
+const headerCatBtn = document.getElementById("headerCatBtn");
+const headerCatDropdown = document.getElementById("headerCatDropdown");
+
+function closeHeaderPopovers(except=""){
+  if(except !== "search"){
+    headerSearchPopover?.classList.add("hidden");
+    headerSearchBtn?.setAttribute("aria-expanded","false");
+  }
+  if(except !== "categories"){
+    headerCatDropdown?.classList.add("hidden");
+    headerCatBtn?.setAttribute("aria-expanded","false");
+  }
+}
+function updateHeaderSearchSummary(){
+  if(!headerSearchSummary) return;
+  if(!searchTerm){
+    headerSearchSummary.textContent = "Escribí el nombre, categoría, tono o código.";
+    return;
+  }
+  const count = products.filter(matchesSearch).length;
+  headerSearchSummary.textContent = `${count} resultado${count===1?'':'s'} para “${searchTerm}” · Enter para verlos`;
+}
+function setSearchTerm(value, {focusMain=false} = {}){
+  searchTerm = String(value || "").trim();
+  if(productSearch) productSearch.value = value || "";
+  if(headerProductSearch) headerProductSearch.value = value || "";
+  clearSearch?.classList.toggle("hidden", !searchTerm);
+  headerSearchClear?.classList.toggle("hidden", !searchTerm);
+  headerSearchBtn?.classList.toggle("active", !!searchTerm);
+  updateHeaderSearchSummary();
   renderGrid();
+  if(focusMain) productSearch?.focus();
+}
+
+productSearch.addEventListener("input", ()=>setSearchTerm(productSearch.value));
+clearSearch.addEventListener("click", ()=>setSearchTerm("", {focusMain:true}));
+headerProductSearch?.addEventListener("input", ()=>setSearchTerm(headerProductSearch.value));
+headerSearchClear?.addEventListener("click", ()=>{
+  setSearchTerm("");
+  headerProductSearch?.focus();
 });
-clearSearch.addEventListener("click", ()=>{
-  productSearch.value = ""; searchTerm = ""; clearSearch.classList.add("hidden");
-  productSearch.focus(); renderGrid();
+headerProductSearch?.addEventListener("keydown", e=>{
+  if(e.key === "Enter"){
+    e.preventDefault();
+    closeHeaderPopovers();
+    document.getElementById("catalogo")?.scrollIntoView({behavior:"smooth", block:"start"});
+  }
 });
+headerSearchBtn?.addEventListener("click", e=>{
+  e.stopPropagation();
+  const willOpen = headerSearchPopover?.classList.contains("hidden");
+  closeHeaderPopovers(willOpen ? "search" : "");
+  headerSearchPopover?.classList.toggle("hidden", !willOpen);
+  headerSearchBtn.setAttribute("aria-expanded", String(!!willOpen));
+  if(willOpen) setTimeout(()=>headerProductSearch?.focus(), 30);
+});
+headerCatBtn?.addEventListener("click", e=>{
+  e.stopPropagation();
+  const willOpen = headerCatDropdown?.classList.contains("hidden");
+  closeHeaderPopovers(willOpen ? "categories" : "");
+  headerCatDropdown?.classList.toggle("hidden", !willOpen);
+  headerCatBtn.setAttribute("aria-expanded", String(!!willOpen));
+});
+[headerSearchPopover, headerCatDropdown].forEach(el=>el?.addEventListener("click", e=>e.stopPropagation()));
+document.addEventListener("click", ()=>closeHeaderPopovers());
+document.addEventListener("keydown", e=>{ if(e.key === "Escape") closeHeaderPopovers(); });
 
 /* ---------- Mi pedido ---------- */
 const CART_KEY = "princessesbox_cart_v1";
@@ -1365,7 +1618,7 @@ function renderAdminList(){
       </div>
       ${thumb ? `<img src="${thumb}" alt="">` : `<div class="ph">${catIcon(p.category)}</div>`}
       <div class="info">
-        <div class="n">${p.name} ${p.featured?'⭐':''} ${p.nuevo?'🆕':''} ${p.oferta?'🔥':''} ${count>1?`<span style="color:var(--mauve); font-size:0.72rem;">📷×${count}</span>`:''} ${(p.tones&&p.tones.length)?`<span style="color:var(--mauve); font-size:0.72rem;">🎨×${p.tones.length}</span>`:''}</div>
+        <div class="n">${p.name} ${p.featured?'⭐':''} ${p.nuevo?'🆕':''} ${p.oferta?'🔥':''} ${count>1?`<span style="color:var(--mauve); font-size:0.72rem;">📷×${count}</span>`:''} ${p.videoId?`<span style="color:var(--mauve); font-size:0.72rem;">🎬 Video</span>`:''} ${(p.tones&&p.tones.length)?`<span style="color:var(--mauve); font-size:0.72rem;">🎨×${p.tones.length}</span>`:''}</div>
         <div class="m">${catLabel(p.category)} · ${fmtPrice(p.price)} · ${p.status==='disponible'?'Disponible':'Agotado'}</div>
       </div>
       <div class="actions">
@@ -1530,7 +1783,20 @@ imgTabs.forEach(tab=>{
 });
 
 let formImages = []; // fotos del producto que se está creando/editando en el formulario
+let formVideoId = ""; // ID del video opcional guardado en Google Drive
 let formTones = []; // tonos, colores o números del producto
+
+const videoAdminCard = document.getElementById("videoAdminCard");
+const videoAdminInfo = document.getElementById("videoAdminInfo");
+const removeVideoBtn = document.getElementById("removeVideoBtn");
+function renderFormVideo(){
+  if(!videoAdminCard || !videoAdminInfo) return;
+  videoAdminCard.classList.toggle("empty", !formVideoId);
+  videoAdminInfo.innerHTML = formVideoId
+    ? `<strong>🎬 Video cargado</strong>Quedará visible con el botón “Ver video” cuando guardes el producto.`
+    : `<strong>🎬 Video opcional</strong>Este producto todavía no tiene video.`;
+}
+removeVideoBtn?.addEventListener("click", ()=>{ formVideoId = ""; renderFormVideo(); });
 
 const toneListEl = document.getElementById("toneList");
 const toneInputEl = document.getElementById("fToneInput");
@@ -1583,25 +1849,31 @@ function driveImageUrl(fileId){
 }
 
 window.addEventListener("message", (event)=>{
-  // Apps Script puede enviar el mensaje desde un iframe interno de googleusercontent,
-  // por eso no comparamos event.source con el iframe exterior. Validamos el tipo de mensaje.
+  // Apps Script puede enviar el mensaje desde un iframe interno de googleusercontent.
+  // Validamos el tipo de mensaje que genera nuestro cargador.
   const data = event.data;
-  if(!data || data.type !== "PRINCESSESBOX_IMAGES" || !Array.isArray(data.images)) return;
+  if(!data) return;
 
-  const nuevas = data.images
-    .filter(x=>x && x.id)
-    .map(x=>driveImageUrl(x.id));
+  if(data.type === "PRINCESSESBOX_IMAGES" && Array.isArray(data.images)){
+    const nuevas = data.images.filter(x=>x && x.id).map(x=>driveImageUrl(x.id));
+    nuevas.forEach(url=>{ if(!formImages.includes(url)) formImages.push(url); });
+    renderFormGallery();
+    if(driveUploadStatus){
+      driveUploadStatus.textContent = nuevas.length
+        ? `✅ ${nuevas.length} foto${nuevas.length===1?'':'s'} subida${nuevas.length===1?'':'s'} a Google Drive y lista${nuevas.length===1?'':'s'} para guardar.`
+        : "No se recibió ninguna foto nueva.";
+      driveUploadStatus.className = nuevas.length ? "drive-upload-status ok" : "drive-upload-status err";
+    }
+    return;
+  }
 
-  nuevas.forEach(url=>{
-    if(!formImages.includes(url)) formImages.push(url);
-  });
-  renderFormGallery();
-
-  if(driveUploadStatus){
-    driveUploadStatus.textContent = nuevas.length
-      ? `✅ ${nuevas.length} foto${nuevas.length===1?'':'s'} subida${nuevas.length===1?'':'s'} a Google Drive y lista${nuevas.length===1?'':'s'} para guardar.`
-      : "No se recibió ninguna foto nueva.";
-    driveUploadStatus.className = nuevas.length ? "drive-upload-status ok" : "drive-upload-status err";
+  if(data.type === "PRINCESSESBOX_VIDEO" && data.video && data.video.id){
+    formVideoId = String(data.video.id);
+    renderFormVideo();
+    if(driveUploadStatus){
+      driveUploadStatus.textContent = `✅ Video “${data.video.name || 'producto'}” subido a Google Drive y listo para guardar.`;
+      driveUploadStatus.className = "drive-upload-status ok";
+    }
   }
 });
 
@@ -1632,7 +1904,9 @@ function loadIntoForm(id){
   formTones = Array.isArray(p.tones) ? [...p.tones] : [];
   renderToneList();
   formImages = (p.images && p.images.length) ? [...p.images] : (p.image ? [p.image] : []);
+  formVideoId = p.videoId || "";
   renderFormGallery();
+  renderFormVideo();
   document.getElementById("saveBtnLabel").textContent = "💾 Guardar cambios";
   cancelEditBtn.classList.remove("hidden");
   form.scrollIntoView({behavior:"smooth", block:"start"});
@@ -1642,13 +1916,15 @@ function resetForm(){
   form.reset();
   document.getElementById("editId").value = "";
   formImages = [];
+  formVideoId = "";
   formTones = [];
   renderFormGallery();
+  renderFormVideo();
   renderToneList();
   imgTabs.forEach(t=>t.classList.toggle("active", t.dataset.mode==="file"));
   imgModeFile.classList.remove("hidden"); imgModeUrl.classList.add("hidden");
   if(driveUploadStatus){
-    driveUploadStatus.textContent = 'Elegí una o varias fotos dentro del recuadro y tocá “Subir imágenes”. Cuando termine, aparecerán arriba como miniaturas.';
+    driveUploadStatus.textContent = 'Elegí fotos y, si querés, un video dentro del recuadro. Las fotos aparecerán arriba y el video quedará asociado al producto.';
     driveUploadStatus.className = "drive-upload-status";
   }
   document.getElementById("saveBtnLabel").textContent = "➕ Agregar producto";
@@ -1675,6 +1951,7 @@ form.addEventListener("submit", async e => {
     precioAnterior: Number(document.getElementById("fOldPrice").value) || 0,
     tonos: formTones.slice(),
     imagenes: formImages.slice(),
+    videoId: formVideoId || "",
     orden: id ? (products.find(p=>p.id===id)?.orden ?? products.length+1) : products.length+1
   };
   if(!firestoreData.nombre){ alert("Poné un nombre para el producto 💕"); return; }
@@ -1708,7 +1985,7 @@ async function deleteProduct(id){
 
 /* ---------- publicación automática con Firestore ---------- */
 document.getElementById("publishBtn").addEventListener("click", ()=>{
-  alert("✅ Los datos se guardan automáticamente en Firestore y las fotos en Google Drive. No necesitás volver a subir el HTML para cambiar productos.");
+  alert("✅ Los datos se guardan automáticamente en Firestore y las fotos/videos en Google Drive. No necesitás volver a subir el HTML para cambiar productos.");
 });
 
 /* ---------- init ---------- */
