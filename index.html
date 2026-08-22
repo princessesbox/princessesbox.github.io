@@ -7,18 +7,18 @@
 <meta name="princessesbox-build" content="catalogo-store-v5">
 <meta name="description" content="Catálogo online de PRINCESSES_BOX: maquillaje, skincare, accesorios, uñas, pelo y más. Consultá productos y armá tu pedido por WhatsApp.">
 <meta name="theme-color" content="#C17F6A">
-<link rel="canonical" href="https://matiassilvero1204-maker.github.io/princesses-box/">
+<link rel="canonical" href="https://princessesbox.github.io/">
 <link rel="icon" type="image/png" href="images/logo.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="PRINCESSES_BOX · Catálogo de Belleza">
 <meta property="og:description" content="Explorá productos de belleza, armá tu pedido y consultanos directamente por WhatsApp.">
-<meta property="og:url" content="https://matiassilvero1204-maker.github.io/princesses-box/">
-<meta property="og:image" content="https://matiassilvero1204-maker.github.io/princesses-box/images/brand.png">
+<meta property="og:url" content="https://princessesbox.github.io/">
+<meta property="og:image" content="https://princessesbox.github.io/images/brand.png">
 <meta property="og:image:alt" content="PRINCESSES_BOX · Productos de belleza">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="PRINCESSES_BOX · Catálogo de Belleza">
 <meta name="twitter:description" content="Explorá productos de belleza, armá tu pedido y consultanos por WhatsApp.">
-<meta name="twitter:image" content="https://matiassilvero1204-maker.github.io/princesses-box/images/brand.png">
+<meta name="twitter:image" content="https://princessesbox.github.io/images/brand.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -102,7 +102,7 @@
   /* ---------- accesos rápidos del encabezado ---------- */
   .header-right{display:flex;align-items:center;gap:18px;min-width:0;}
   .header-tools{display:flex;align-items:center;gap:8px;position:relative;}
-  .header-cat-menu,.header-search-menu{position:relative;}
+  .header-cat-menu,.header-filter-menu,.header-search-menu{position:relative;}
   .header-tool-btn,.header-icon-btn{
     height:40px;display:inline-flex;align-items:center;justify-content:center;gap:7px;
     border:1px solid var(--blush-deep);background:#fff;color:var(--ink-soft);
@@ -143,6 +143,8 @@
   .header-search-clear{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--mauve);}
   .header-search-clear:hover{background:var(--blush);}
   .header-search-summary{font-size:.72rem;color:var(--mauve);padding:8px 6px 2px;min-height:25px;}
+  .header-filter-popover{width:min(360px,calc(100vw - 24px));padding:14px;}
+  .header-filter-title{padding:1px 2px 10px;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mauve);font-weight:600;}
 
   /* ---------- hero ---------- */
   .hero{
@@ -540,6 +542,41 @@
   .search-clear:hover{background:var(--blush);}
   .search-summary{text-align:center; margin-top:9px; font-size:.76rem; color:var(--mauve); min-height:18px;}
 
+  /* ---------- filtros + orden del catálogo (solo encabezado) ---------- */
+  .catalog-filter-panel{
+    display:grid; gap:12px; margin:0; padding:0; max-width:none;
+  }
+  .catalog-filter-pills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+  .catalog-filter-btn{
+    width:100%;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+    min-height:38px;padding:8px 11px;border-radius:999px;
+    background:#fff;border:1px solid var(--blush-deep);color:var(--ink-soft);
+    font-size:.76rem;font-weight:500;transition:all .2s;
+  }
+  .catalog-filter-btn:hover{border-color:var(--terracotta);color:var(--terracotta-dark);}
+  .catalog-filter-btn.active{
+    background:var(--terracotta-dark);border-color:var(--terracotta-dark);color:#fff;
+    box-shadow:0 7px 18px -10px rgba(74,55,51,.55);
+  }
+  .catalog-sort{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;
+    border:1px solid var(--blush-deep);border-radius:12px;padding:7px 10px 7px 12px;
+    color:var(--mauve);font-size:.75rem;
+  }
+  .catalog-sort select{
+    flex:1;min-width:0;border:none;outline:none;background:transparent;color:var(--ink);
+    font-family:inherit;font-size:.79rem;font-weight:500;cursor:pointer;padding:5px 2px;text-align:right;
+  }
+  .product-stock-indicator{
+    display:inline-flex; align-items:center; width:max-content; max-width:100%;
+    margin-top:2px; padding:5px 9px; border-radius:999px;
+    font-size:.69rem; font-weight:600; line-height:1.2;
+    background:#edf7ef; color:#477354; border:1px solid #d7eadb;
+  }
+  .product-stock-indicator.low{background:#fff5e7;color:#a56a22;border-color:#f2dfbd;}
+  .product-stock-indicator.out{background:#fbecec;color:#a64f4f;border-color:#f0d1d1;}
+  .tone-preview span.low{background:#fff5e7;border-color:#f2dfbd;color:#a56a22;}
+
   /* ---------- badges + precios + acciones ---------- */
   .product-media{touch-action:pan-y;}
   .badge-stack{position:absolute; top:12px; left:12px; z-index:4; display:flex; flex-direction:column; align-items:flex-start; gap:6px;}
@@ -690,6 +727,10 @@
     .header-tool-btn{height:38px;padding:0 11px;font-size:.76rem;}
     .header-icon-btn{width:38px;height:38px;}
     .catalog-tools{padding:0 4vw;}
+    .header-filter-popover{width:min(340px,calc(100vw - 18px));padding:12px;}
+    .catalog-filter-pills{gap:7px;}
+    .catalog-filter-btn{padding:8px 7px;font-size:.71rem;}
+    .catalog-sort{width:100%;}
     .products-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
     .product-body{padding:13px 12px 14px;gap:6px;}
     .product-name{font-size:1rem;}
@@ -743,6 +784,31 @@
         </button>
         <div class="header-popover header-cat-dropdown hidden" id="headerCatDropdown"></div>
       </div>
+      <div class="header-filter-menu">
+        <button type="button" class="header-tool-btn" id="headerFilterBtn" aria-expanded="false" aria-controls="headerFilterPopover">
+          <span>⚙️</span><span class="header-tool-label">Filtros</span><span class="header-tool-chevron">▾</span>
+        </button>
+        <div class="header-popover header-filter-popover hidden" id="headerFilterPopover">
+          <div class="header-filter-title">Filtrar y ordenar</div>
+          <div class="catalog-filter-panel" aria-label="Filtros y orden del catálogo">
+            <div class="catalog-filter-pills" id="catalogFilters">
+              <button type="button" class="catalog-filter-btn active" data-filter="todos">🌸 Todos</button>
+              <button type="button" class="catalog-filter-btn" data-filter="disponibles">🟢 Disponibles</button>
+              <button type="button" class="catalog-filter-btn" data-filter="ofertas">🔥 Ofertas</button>
+              <button type="button" class="catalog-filter-btn" data-filter="nuevos">🆕 Nuevos</button>
+            </div>
+            <label class="catalog-sort" for="catalogSort">
+              <span>Ordenar por:</span>
+              <select id="catalogSort">
+                <option value="featured">⭐ Destacados</option>
+                <option value="new">🆕 Más nuevos</option>
+                <option value="price-asc">$ Menor precio</option>
+                <option value="price-desc">$$$ Mayor precio</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </div>
       <div class="header-search-menu">
         <button type="button" class="header-icon-btn" id="headerSearchBtn" aria-expanded="false" aria-controls="headerSearchPopover" aria-label="Buscar productos" title="Buscar productos">🔎</button>
         <div class="header-popover header-search-popover hidden" id="headerSearchPopover">
@@ -788,6 +854,7 @@
     </div>
     <div class="search-summary" id="searchSummary"></div>
   </div>
+
   <div class="cat-nav" id="catNav"></div>
 </section>
 
@@ -1043,7 +1110,7 @@ const ADMIN_PIN = "123098";                   // PIN para entrar al panel de adm
 const DRIVE_UPLOADER_URL = "https://script.google.com/macros/s/AKfycby7upvtYD-qjsEeyBj3nZGUTmJgxF6SDf_XQBx6eZFK4kY5q47PegQK6uHtA7n4fKhkBg/exec"; // Google Apps Script para subir fotos y video a Drive
 const INSTAGRAM_URL = "https://www.instagram.com/princesses_boxx?igsh=MTVwNmU5c3JiNHF0dA==";
 const TIKTOK_URL = "https://vm.tiktok.com/ZS9kMBMLv3sBC-nyeRD/";
-const BUILD_VERSION = "b7-video";
+const BUILD_VERSION = "b9-filtros-header";
 /* Estas son las categorías que se ven la PRIMERA vez que entra alguien al link.
    Se sincronizan con Firestore. Podés administrarlas desde el panel
    (para eso está la sección "Categorías" dentro del panel). */
@@ -1159,6 +1226,8 @@ async function saveProducts(list){
 
 let activeCategory = "todos";
 let searchTerm = "";
+let catalogFilter = "todos";
+let catalogSort = "featured";
 
 function normalizeSearch(value){
   return String(value ?? "")
@@ -1182,20 +1251,71 @@ function toneIsAvailable(p, tone){
 }
 function toneStockText(p, tone){
   const stock = toneStockValue(p, tone);
-  if(stock === null) return "Disponible";
-  if(stock <= 0) return "Sin stock";
-  return `${stock} disp.`;
+  if(stock === null) return "🟢 Disponible";
+  if(stock <= 0) return "🔴 Sin stock";
+  if(stock <= 2) return `🟠 ¡Últimas ${stock} unidad${stock===1?'':'es'}!`;
+  return `🟢 ${stock} disp.`;
+}
+function toneStockClass(p, tone){
+  const stock = toneStockValue(p, tone);
+  if(stock === null || stock > 2) return "available";
+  if(stock <= 0) return "out";
+  return "low";
 }
 function productHasAvailability(p){
   if(!p || p.status !== "disponible") return false;
   const tones = Array.isArray(p.tones) ? p.tones.filter(Boolean) : [];
   return !tones.length || tones.some(t=>toneIsAvailable(p,t));
 }
-function productSortRank(p){
-  if(!productHasAvailability(p)) return 2; // agotados o sin stock siempre al final
-  return p.featured ? 0 : 1;               // destacados disponibles primero
+function knownProductStock(p){
+  const tones = Array.isArray(p?.tones) ? p.tones.filter(Boolean) : [];
+  if(!tones.length) return null;
+  const values = tones.map(t=>toneStockValue(p,t));
+  if(values.some(v=>v===null)) return null;
+  return values.reduce((sum,n)=>sum+n,0);
 }
+function productStockInfo(p){
+  if(!productHasAvailability(p)) return {label:"🔴 Sin stock", cls:"out"};
+  const total = knownProductStock(p);
+  if(total !== null && total <= 2){
+    return {label:`🟠 ¡Últimas ${total} unidad${total===1?'':'es'}!`, cls:"low"};
+  }
+  return {label:"🟢 Disponible", cls:"available"};
+}
+function productSortRank(p){
+  if(!productHasAvailability(p)) return 2;
+  return p.featured ? 0 : 1;
+}
+function matchesCatalogFilter(p){
+  if(catalogFilter === "disponibles") return productHasAvailability(p);
+  if(catalogFilter === "ofertas") return !!p.oferta;
+  if(catalogFilter === "nuevos") return !!p.nuevo;
+  return true;
+}
+function compareCatalogProducts(a,b){
+  const availabilityRank = Number(!productHasAvailability(a)) - Number(!productHasAvailability(b));
+  if(availabilityRank !== 0) return availabilityRank;
 
+  if(catalogSort === "new"){
+    const newRank = Number(!a.nuevo) - Number(!b.nuevo);
+    if(newRank !== 0) return newRank;
+    return (a.orden ?? 9999) - (b.orden ?? 9999);
+  }
+  if(catalogSort === "price-asc"){
+    const priceRank = Number(a.price || 0) - Number(b.price || 0);
+    if(priceRank !== 0) return priceRank;
+    return (a.orden ?? 9999) - (b.orden ?? 9999);
+  }
+  if(catalogSort === "price-desc"){
+    const priceRank = Number(b.price || 0) - Number(a.price || 0);
+    if(priceRank !== 0) return priceRank;
+    return (a.orden ?? 9999) - (b.orden ?? 9999);
+  }
+
+  const featuredRank = productSortRank(a) - productSortRank(b);
+  if(featuredRank !== 0) return featuredRank;
+  return (a.orden ?? 9999) - (b.orden ?? 9999);
+}
 
 
 /* ---------- render categorías ---------- */
@@ -1264,19 +1384,17 @@ function safeText(value){
 /* ---------- render grilla de productos ---------- */
 function renderGrid(){
   const grid = document.getElementById("productsGrid");
-  const baseList = searchTerm
+  const categoryOrSearchList = searchTerm
     ? products.filter(matchesSearch)
     : (activeCategory==="todos" ? products : products.filter(p=>p.category===activeCategory));
-  const list = [...baseList].sort((a,b)=>{
-    const rank = productSortRank(a) - productSortRank(b);
-    if(rank !== 0) return rank;
-    return (a.orden ?? 9999) - (b.orden ?? 9999);
-  });
+  const baseList = categoryOrSearchList.filter(matchesCatalogFilter);
+  const list = [...baseList].sort(compareCatalogProducts);
 
   const summary = document.getElementById("searchSummary");
   if(summary){
-    if(searchTerm) summary.textContent = `${list.length} resultado${list.length===1?'':'s'} para “${searchTerm}”`;
-    else summary.textContent = `${list.length} producto${list.length===1?'':'s'}`;
+    const filterNames = {todos:"", disponibles:" disponibles", ofertas:" en oferta", nuevos:" nuevos"};
+    if(searchTerm) summary.textContent = `${list.length} resultado${list.length===1?'':'s'}${filterNames[catalogFilter]||""} para “${searchTerm}”`;
+    else summary.textContent = `${list.length} producto${list.length===1?'':'s'}${filterNames[catalogFilter]||""}`;
   }
 
   if(list.length===0){
@@ -1291,6 +1409,7 @@ function renderGrid(){
     const showOldPrice = p.oferta && oldPrice > Number(p.price || 0);
     const tones = Array.isArray(p.tones) ? p.tones.filter(Boolean) : [];
     const available = productHasAvailability(p);
+    const stockInfo = productStockInfo(p);
     const firstAvailableTone = tones.find(t=>toneIsAvailable(p,t)) || tones[0] || "";
     return `
     <article class="product-card ${available?'':'agotado'}" id="producto-${safeText(p.id)}">
@@ -1317,6 +1436,7 @@ function renderGrid(){
           <div class="product-price">${fmtPrice(p.price)}</div>
         </div>
         ${p.sku ? `<div class="product-sku">Cód: ${safeText(p.sku)}</div>` : ""}
+        <div class="product-stock-indicator ${stockInfo.cls}">${safeText(stockInfo.label)}</div>
         ${tones.length ? `<div class="product-tones">
           <label class="product-tone-label" for="tone-${safeText(p.id)}">🎨 Elegí tono / color</label>
           <select class="product-tone-select" id="tone-${safeText(p.id)}" data-tone-for="${safeText(p.id)}">
@@ -1325,7 +1445,7 @@ function renderGrid(){
               return `<option value="${safeText(t)}" ${!inStock?'disabled':''} ${t===firstAvailableTone?'selected':''}>${safeText(t)} — ${safeText(toneStockText(p,t))}</option>`;
             }).join("")}
           </select>
-          <div class="tone-preview">${tones.slice(0,8).map(t=>`<span class="${toneIsAvailable(p,t)?'':'out'}">${safeText(t)} · ${safeText(toneStockText(p,t))}</span>`).join("")}${tones.length>8?`<span>+${tones.length-8}</span>`:""}</div>
+          <div class="tone-preview">${tones.slice(0,8).map(t=>`<span class="${toneStockClass(p,t)}">${safeText(t)} · ${safeText(toneStockText(p,t))}</span>`).join("")}${tones.length>8?`<span>+${tones.length-8}</span>`:""}</div>
         </div>` : ""}
         <div class="product-actions">
           ${p.videoId ? `<button type="button" class="btn-video" data-video-product="${safeText(p.id)}">▶ Ver video</button>` : ""}
@@ -1488,6 +1608,8 @@ const headerSearchBtn = document.getElementById("headerSearchBtn");
 const headerSearchPopover = document.getElementById("headerSearchPopover");
 const headerCatBtn = document.getElementById("headerCatBtn");
 const headerCatDropdown = document.getElementById("headerCatDropdown");
+const headerFilterBtn = document.getElementById("headerFilterBtn");
+const headerFilterPopover = document.getElementById("headerFilterPopover");
 
 function closeHeaderPopovers(except=""){
   if(except !== "search"){
@@ -1497,6 +1619,10 @@ function closeHeaderPopovers(except=""){
   if(except !== "categories"){
     headerCatDropdown?.classList.add("hidden");
     headerCatBtn?.setAttribute("aria-expanded","false");
+  }
+  if(except !== "filters"){
+    headerFilterPopover?.classList.add("hidden");
+    headerFilterBtn?.setAttribute("aria-expanded","false");
   }
 }
 function updateHeaderSearchSummary(){
@@ -1549,9 +1675,45 @@ headerCatBtn?.addEventListener("click", e=>{
   headerCatDropdown?.classList.toggle("hidden", !willOpen);
   headerCatBtn.setAttribute("aria-expanded", String(!!willOpen));
 });
-[headerSearchPopover, headerCatDropdown].forEach(el=>el?.addEventListener("click", e=>e.stopPropagation()));
+headerFilterBtn?.addEventListener("click", e=>{
+  e.stopPropagation();
+  const willOpen = headerFilterPopover?.classList.contains("hidden");
+  closeHeaderPopovers(willOpen ? "filters" : "");
+  headerFilterPopover?.classList.toggle("hidden", !willOpen);
+  headerFilterBtn.setAttribute("aria-expanded", String(!!willOpen));
+});
+[headerSearchPopover, headerCatDropdown, headerFilterPopover].forEach(el=>el?.addEventListener("click", e=>e.stopPropagation()));
 document.addEventListener("click", ()=>closeHeaderPopovers());
 document.addEventListener("keydown", e=>{ if(e.key === "Escape") closeHeaderPopovers(); });
+
+/* ---------- filtros + orden ---------- */
+const catalogFilters = document.getElementById("catalogFilters");
+const catalogSortSelect = document.getElementById("catalogSort");
+
+function syncCatalogFilterUI(){
+  catalogFilters?.querySelectorAll("[data-filter]").forEach(btn=>{
+    btn.classList.toggle("active", btn.dataset.filter === catalogFilter);
+  });
+  if(catalogSortSelect) catalogSortSelect.value = catalogSort;
+  headerFilterBtn?.classList.toggle("active", catalogFilter !== "todos" || catalogSort !== "featured");
+}
+catalogFilters?.addEventListener("click", e=>{
+  const btn = e.target.closest("[data-filter]");
+  if(!btn) return;
+  catalogFilter = btn.dataset.filter || "todos";
+  syncCatalogFilterUI();
+  renderGrid();
+  closeHeaderPopovers();
+  document.getElementById("catalogo")?.scrollIntoView({behavior:"smooth", block:"start"});
+});
+catalogSortSelect?.addEventListener("change", ()=>{
+  catalogSort = catalogSortSelect.value || "featured";
+  syncCatalogFilterUI();
+  renderGrid();
+  closeHeaderPopovers();
+  document.getElementById("catalogo")?.scrollIntoView({behavior:"smooth", block:"start"});
+});
+syncCatalogFilterUI();
 
 /* ---------- Mi pedido ---------- */
 const CART_KEY = "princessesbox_cart_v1";
