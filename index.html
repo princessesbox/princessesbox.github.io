@@ -564,22 +564,44 @@
     font-size:.83rem; font-weight:600; cursor:not-allowed;
   }
 
-  /* ---------- tonos / colores ---------- */
+  /* ---------- tonos / colores + stock por variante ---------- */
   .tone-editor{border:1px solid var(--blush-deep);border-radius:12px;padding:12px;background:var(--blush);}
-  .tone-list{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:9px;}
+  .tone-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
   .tone-list:empty{display:none;}
-  .tone-chip-admin{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--mauve-light);color:var(--ink);padding:6px 9px;border-radius:999px;font-size:.78rem;}
-  .tone-chip-admin button{width:18px;height:18px;border-radius:50%;background:var(--blush-deep);color:var(--ink-soft);font-size:.68rem;line-height:1;}
-  .tone-chip-admin button:hover{background:#c0554e;color:#fff;}
-  .tone-add-row{display:flex;gap:8px;}
-  .tone-add-row input{flex:1;}
+  .tone-stock-row{
+    display:grid;grid-template-columns:minmax(140px,1fr) 110px auto auto;
+    gap:8px;align-items:center;background:#fff;border:1px solid var(--mauve-light);
+    border-radius:12px;padding:8px;
+  }
+  .tone-stock-row input{
+    width:100%;border:1px solid var(--blush-deep);border-radius:9px;padding:8px 9px;
+    background:#fff;color:var(--ink);font-family:inherit;font-size:.8rem;
+  }
+  .tone-stock-row input:focus{outline:2px solid var(--terracotta);outline-offset:1px;}
+  .tone-stock-qty{display:flex;align-items:center;gap:5px;}
+  .tone-stock-qty span{font-size:.68rem;color:var(--mauve);}
+  .tone-stock-status{font-size:.7rem;color:#4b8664;white-space:nowrap;font-weight:600;}
+  .tone-stock-status.out{color:#b64f4f;}
+  .tone-stock-status.free{color:var(--mauve);font-weight:500;}
+  .tone-remove-btn{
+    width:32px;height:32px;border-radius:9px;background:var(--blush-deep);
+    color:var(--ink-soft);font-size:.82rem;display:flex;align-items:center;justify-content:center;
+  }
+  .tone-remove-btn:hover{background:#c0554e;color:#fff;}
+  .tone-add-row{display:grid;grid-template-columns:minmax(140px,1fr) 110px auto;gap:8px;align-items:center;}
+  .tone-add-row input{min-width:0;}
+  .tone-stock-head{display:grid;grid-template-columns:minmax(140px,1fr) 110px auto;gap:8px;margin-bottom:6px;padding:0 8px;}
+  .tone-stock-head span{font-size:.66rem;letter-spacing:.04em;text-transform:uppercase;color:var(--mauve);}
   .product-tones{margin-top:2px;}
   .product-tone-label{display:block;font-size:.72rem;color:var(--mauve);margin-bottom:5px;font-weight:500;}
   .product-tone-select{width:100%;border:1px solid var(--blush-deep);border-radius:10px;padding:9px 10px;background:var(--blush);color:var(--ink);font-family:inherit;font-size:.82rem;}
   .product-tone-select:focus{outline:2px solid var(--terracotta);outline-offset:1px;}
+  .product-tone-select option:disabled{color:#aaa;}
   .tone-preview{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;}
   .tone-preview span{background:var(--blush);border:1px solid var(--blush-deep);border-radius:999px;padding:3px 7px;font-size:.66rem;color:var(--ink-soft);}
+  .tone-preview span.out{opacity:.62;text-decoration:line-through;}
   .cart-item-tone{font-size:.72rem;color:var(--mauve);margin-top:2px;}
+  .cart-item-stock{font-size:.68rem;color:#4b8664;margin-top:2px;}
 
   /* ---------- Mi pedido ---------- */
   .cart-fab{
@@ -679,6 +701,11 @@
     .badge-estado{top:8px;right:8px;font-size:.56rem;padding:4px 7px;}
     .pm-nav{width:31px;height:31px;}
     .cart-fab{right:14px;bottom:14px;padding:11px 14px;}
+    .tone-stock-row{grid-template-columns:minmax(0,1fr) 92px 32px;}
+    .tone-stock-row .tone-stock-status{grid-column:1 / -1;padding-left:2px;}
+    .tone-add-row{grid-template-columns:minmax(0,1fr) 92px;}
+    .tone-add-row #addToneBtn{grid-column:1 / -1;width:100%;}
+    .tone-stock-head{grid-template-columns:minmax(0,1fr) 92px;}
   }
   @media (max-width:430px){
     .brand-name{display:none;}
@@ -872,14 +899,20 @@
         <textarea id="fDesc" placeholder="Contá de qué se trata, colores, beneficios..."></textarea>
       </div>
       <div class="field full">
-        <label>🎨 Tonos / colores / números (opcional)</label>
+        <label>🎨 Tonos / colores / números + disponibilidad (opcional)</label>
         <div class="tone-editor">
+          <div class="tone-stock-head">
+            <span>Tono / color / número</span>
+            <span>Stock</span>
+            <span></span>
+          </div>
           <div id="toneList" class="tone-list"></div>
           <div class="tone-add-row">
             <input type="text" id="fToneInput" placeholder="Ej: Nude, Rojo, 01, Tono 03">
+            <input type="number" id="fToneStock" min="0" step="1" inputmode="numeric" placeholder="Stock">
             <button type="button" class="btn-cancel" id="addToneBtn">➕ Agregar</button>
           </div>
-          <div class="field-hint">Podés escribir un color, un número o ambos. También podés pegar varios separados por coma, por ejemplo: 01, 02, Nude, Rosa.</div>
+          <div class="field-hint">Ejemplo: Rojo + stock 3 → “3 disp.”. Si ponés 0 → “Sin stock”. Si dejás Stock vacío, se mostrará “Disponible” sin controlar cantidad. Podés editar el nombre y el stock de cada opción o quitarla cuando quieras.</div>
         </div>
       </div>
       <div class="field full">
@@ -1093,7 +1126,17 @@ function iniciarProductosFirestore(){
         orden: Number(x.orden ?? 9999),
         images: Array.isArray(x.imagenes) ? x.imagenes : [],
         videoId: String(x.videoId || "").trim(),
-        tones: Array.isArray(x.tonos) ? x.tonos.map(v=>String(v).trim()).filter(Boolean) : []
+        tones: Array.isArray(x.tonos) ? x.tonos.map(v=>String(v).trim()).filter(Boolean) : [],
+        toneStock: (() => {
+          const src = x.stockTonos && typeof x.stockTonos === "object" ? x.stockTonos : {};
+          const out = {};
+          Object.entries(src).forEach(([k,v])=>{
+            const key = String(k || "").trim();
+            const n = Number(v);
+            if(key && Number.isFinite(n)) out[key] = Math.max(0, Math.floor(n));
+          });
+          return out;
+        })()
       };
     });
     products.sort((a,b)=>(a.orden??9999)-(b.orden??9999));
@@ -1127,9 +1170,30 @@ function matchesSearch(p){
   const haystack = normalizeSearch([p.name, p.desc, catLabel(p.category), p.category, p.sku, ...(Array.isArray(p.tones)?p.tones:[])].join(" "));
   return haystack.includes(normalizeSearch(searchTerm));
 }
+function toneStockValue(p, tone){
+  if(!p || !tone || !p.toneStock || typeof p.toneStock !== "object") return null;
+  if(!Object.prototype.hasOwnProperty.call(p.toneStock, tone)) return null;
+  const n = Number(p.toneStock[tone]);
+  return Number.isFinite(n) ? Math.max(0, Math.floor(n)) : null;
+}
+function toneIsAvailable(p, tone){
+  const stock = toneStockValue(p, tone);
+  return stock === null || stock > 0;
+}
+function toneStockText(p, tone){
+  const stock = toneStockValue(p, tone);
+  if(stock === null) return "Disponible";
+  if(stock <= 0) return "Sin stock";
+  return `${stock} disp.`;
+}
+function productHasAvailability(p){
+  if(!p || p.status !== "disponible") return false;
+  const tones = Array.isArray(p.tones) ? p.tones.filter(Boolean) : [];
+  return !tones.length || tones.some(t=>toneIsAvailable(p,t));
+}
 function productSortRank(p){
-  if(p.status !== "disponible") return 2; // agotados siempre al final
-  return p.featured ? 0 : 1;              // destacados disponibles primero
+  if(!productHasAvailability(p)) return 2; // agotados o sin stock siempre al final
+  return p.featured ? 0 : 1;               // destacados disponibles primero
 }
 
 
@@ -1225,8 +1289,9 @@ function renderGrid(){
     const hasMulti = imgs.length > 1;
     const oldPrice = Number(p.precioAnterior || 0);
     const showOldPrice = p.oferta && oldPrice > Number(p.price || 0);
-    const available = p.status === 'disponible';
     const tones = Array.isArray(p.tones) ? p.tones.filter(Boolean) : [];
+    const available = productHasAvailability(p);
+    const firstAvailableTone = tones.find(t=>toneIsAvailable(p,t)) || tones[0] || "";
     return `
     <article class="product-card ${available?'':'agotado'}" id="producto-${safeText(p.id)}">
       <div class="product-media" data-total="${imgs.length}" data-product-id="${safeText(p.id)}">
@@ -1235,7 +1300,7 @@ function renderGrid(){
           ${p.nuevo ? `<span class="badge-nuevo">🆕 Nuevo</span>` : ""}
           ${p.oferta ? `<span class="badge-oferta">🔥 Oferta</span>` : ""}
         </div>
-        <span class="badge-estado ${p.status}">${available?'Disponible':'Agotado'}</span>
+        <span class="badge-estado ${available?'disponible':'agotado'}">${available?'Disponible':'Agotado'}</span>
         ${imgs.length ? imgs.map((src,i)=>`<img src="${safeText(src)}" class="pm-img ${i===0?'active':''}" data-idx="${i}" alt="${safeText(p.name)}" loading="lazy">`).join("") : `<span class="placeholder-icon">${catIcon(p.category)}</span>`}
         ${hasMulti ? `
           <button type="button" class="pm-nav prev" data-dir="-1" aria-label="Foto anterior">‹</button>
@@ -1255,9 +1320,12 @@ function renderGrid(){
         ${tones.length ? `<div class="product-tones">
           <label class="product-tone-label" for="tone-${safeText(p.id)}">🎨 Elegí tono / color</label>
           <select class="product-tone-select" id="tone-${safeText(p.id)}" data-tone-for="${safeText(p.id)}">
-            ${tones.map(t=>`<option value="${safeText(t)}">${safeText(t)}</option>`).join("")}
+            ${tones.map(t=>{
+              const inStock = toneIsAvailable(p,t);
+              return `<option value="${safeText(t)}" ${!inStock?'disabled':''} ${t===firstAvailableTone?'selected':''}>${safeText(t)} — ${safeText(toneStockText(p,t))}</option>`;
+            }).join("")}
           </select>
-          <div class="tone-preview">${tones.slice(0,8).map(t=>`<span>${safeText(t)}</span>`).join("")}${tones.length>8?`<span>+${tones.length-8}</span>`:""}</div>
+          <div class="tone-preview">${tones.slice(0,8).map(t=>`<span class="${toneIsAvailable(p,t)?'':'out'}">${safeText(t)} · ${safeText(toneStockText(p,t))}</span>`).join("")}${tones.length>8?`<span>+${tones.length-8}</span>`:""}</div>
         </div>` : ""}
         <div class="product-actions">
           ${p.videoId ? `<button type="button" class="btn-video" data-video-product="${safeText(p.id)}">▶ Ver video</button>` : ""}
@@ -1492,11 +1560,21 @@ try{ cart = JSON.parse(localStorage.getItem(CART_KEY) || "[]"); if(!Array.isArra
 function saveCart(){ localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
 function cartKey(id, tone=""){ return `${id}::${tone || ""}`; }
 function addToCart(id, tone=""){
-  const p = products.find(x=>x.id===id && x.status==="disponible");
-  if(!p) return;
+  const p = products.find(x=>x.id===id);
+  if(!p || !productHasAvailability(p)) return;
   const tones = Array.isArray(p.tones) ? p.tones.filter(Boolean) : [];
-  if(tones.length && !tone) tone = tones[0];
+  if(tones.length && !tone) tone = tones.find(t=>toneIsAvailable(p,t)) || "";
+  if(tones.length && (!tone || !toneIsAvailable(p,tone))){
+    alert("Ese tono/color está sin stock. Elegí otra opción 💕");
+    return;
+  }
+  const stock = tone ? toneStockValue(p,tone) : null;
   const item = cart.find(x=>x.id===id && (x.tone||"")===(tone||""));
+  const currentQty = item ? Number(item.qty)||0 : 0;
+  if(stock !== null && currentQty >= stock){
+    alert(`Solo hay ${stock} unidad${stock===1?'':'es'} disponible${stock===1?'':'s'} de ${tone}.`);
+    return;
+  }
   if(item) item.qty += 1; else cart.push({id, tone:tone||"", qty:1});
   saveCart(); renderCart();
   const btn = document.querySelector(`[data-add-order="${CSS.escape(id)}"]`);
@@ -1504,15 +1582,26 @@ function addToCart(id, tone=""){
 }
 function changeCartQty(key, delta){
   const item = cart.find(x=>cartKey(x.id,x.tone||"")===key); if(!item) return;
+  const p = products.find(x=>x.id===item.id);
+  if(delta > 0 && p && item.tone){
+    const stock = toneStockValue(p,item.tone);
+    if(stock !== null && item.qty >= stock){
+      alert(`No podés agregar más: quedan ${stock} unidad${stock===1?'':'es'} de ${item.tone}.`);
+      return;
+    }
+  }
   item.qty += delta;
   if(item.qty <= 0) cart = cart.filter(x=>cartKey(x.id,x.tone||"")!==key);
   saveCart(); renderCart();
 }
 function removeCartItem(key){ cart = cart.filter(x=>cartKey(x.id,x.tone||"")!==key); saveCart(); renderCart(); }
 function renderCart(){
-  const validIds = new Set(products.filter(p=>p.status==="disponible").map(p=>p.id));
   if(products.length){
-    const cleaned = cart.filter(i=>validIds.has(i.id));
+    const cleaned = cart.filter(i=>{
+      const p = products.find(x=>x.id===i.id);
+      if(!p || !productHasAvailability(p)) return false;
+      return !i.tone || toneIsAvailable(p,i.tone);
+    });
     if(cleaned.length !== cart.length){ cart = cleaned; saveCart(); }
   }
   const itemsEl = document.getElementById("cartItems");
@@ -1531,6 +1620,7 @@ function renderCart(){
       <div>
         <div class="cart-item-name">${safeText(p.name)}</div>
         ${item.tone ? `<div class="cart-item-tone">🎨 Tono/Color: <strong>${safeText(item.tone)}</strong></div>` : ""}
+        ${item.tone ? `<div class="cart-item-stock">${safeText(toneStockText(p,item.tone))}</div>` : ""}
         <div class="cart-item-price">${fmtPrice(p.price)} c/u</div>
         <div class="cart-qty"><button type="button" data-cart-minus="${safeText(key)}">−</button><span>${item.qty}</span><button type="button" data-cart-plus="${safeText(key)}">+</button></div>
       </div>
@@ -1550,7 +1640,7 @@ document.getElementById("cartItems").addEventListener("click", e=>{
   if(remove) removeCartItem(remove.dataset.cartRemove);
 });
 document.getElementById("sendCartWhatsapp").addEventListener("click", ()=>{
-  const rows = cart.map(item=>({item,p:products.find(p=>p.id===item.id && p.status==="disponible")})).filter(x=>x.p);
+  const rows = cart.map(item=>({item,p:products.find(p=>p.id===item.id && productHasAvailability(p) && (!item.tone || toneIsAvailable(p,item.tone)))})).filter(x=>x.p);
   if(!rows.length) return;
   const total = rows.reduce((s,x)=>s+(Number(x.p.price)||0)*x.item.qty,0);
   const lines = rows.map(({item,p})=>`• ${item.qty} × ${p.name}${item.tone ? ` · Tono/Color: ${item.tone}` : ""} — ${fmtPrice((Number(p.price)||0)*item.qty)}`);
@@ -1619,7 +1709,7 @@ function renderAdminList(){
       ${thumb ? `<img src="${thumb}" alt="">` : `<div class="ph">${catIcon(p.category)}</div>`}
       <div class="info">
         <div class="n">${p.name} ${p.featured?'⭐':''} ${p.nuevo?'🆕':''} ${p.oferta?'🔥':''} ${count>1?`<span style="color:var(--mauve); font-size:0.72rem;">📷×${count}</span>`:''} ${p.videoId?`<span style="color:var(--mauve); font-size:0.72rem;">🎬 Video</span>`:''} ${(p.tones&&p.tones.length)?`<span style="color:var(--mauve); font-size:0.72rem;">🎨×${p.tones.length}</span>`:''}</div>
-        <div class="m">${catLabel(p.category)} · ${fmtPrice(p.price)} · ${p.status==='disponible'?'Disponible':'Agotado'}</div>
+        <div class="m">${catLabel(p.category)} · ${fmtPrice(p.price)} · ${productHasAvailability(p)?'Disponible':'Agotado'}${(p.tones&&p.tones.length)?` · ${p.tones.filter(t=>toneIsAvailable(p,t)).length}/${p.tones.length} opciones con stock`:''}</div>
       </div>
       <div class="actions">
         <button class="row-btn edit" data-id="${p.id}">✏️ Editar</button>
@@ -1785,6 +1875,7 @@ imgTabs.forEach(tab=>{
 let formImages = []; // fotos del producto que se está creando/editando en el formulario
 let formVideoId = ""; // ID del video opcional guardado en Google Drive
 let formTones = []; // tonos, colores o números del producto
+let formToneStocks = {}; // stock opcional por tono/color/número; si no existe la clave = disponible sin cantidad
 
 const videoAdminCard = document.getElementById("videoAdminCard");
 const videoAdminInfo = document.getElementById("videoAdminInfo");
@@ -1800,23 +1891,93 @@ removeVideoBtn?.addEventListener("click", ()=>{ formVideoId = ""; renderFormVide
 
 const toneListEl = document.getElementById("toneList");
 const toneInputEl = document.getElementById("fToneInput");
+const toneStockInputEl = document.getElementById("fToneStock");
+function toneStockStatusHtml(tone){
+  if(!Object.prototype.hasOwnProperty.call(formToneStocks,tone)){
+    return `<span class="tone-stock-status free">Disponible · sin cantidad</span>`;
+  }
+  const stock = Math.max(0, Math.floor(Number(formToneStocks[tone]) || 0));
+  return stock > 0
+    ? `<span class="tone-stock-status">${stock} disp.</span>`
+    : `<span class="tone-stock-status out">Sin stock</span>`;
+}
 function renderToneList(){
-  toneListEl.innerHTML = formTones.map((tone,i)=>`<span class="tone-chip-admin">${safeText(tone)}<button type="button" data-tone-remove="${i}" title="Quitar tono">✕</button></span>`).join("");
+  toneListEl.innerHTML = formTones.map((tone,i)=>{
+    const hasStock = Object.prototype.hasOwnProperty.call(formToneStocks,tone);
+    const stockValue = hasStock ? Math.max(0, Math.floor(Number(formToneStocks[tone]) || 0)) : "";
+    return `<div class="tone-stock-row" data-tone-row="${i}">
+      <input type="text" value="${safeText(tone)}" data-tone-name-index="${i}" aria-label="Nombre del tono, color o número">
+      <div class="tone-stock-qty">
+        <input type="number" min="0" step="1" inputmode="numeric" value="${stockValue}" data-tone-stock-index="${i}" placeholder="Stock" aria-label="Stock de ${safeText(tone)}">
+        <span>unid.</span>
+      </div>
+      ${toneStockStatusHtml(tone)}
+      <button type="button" class="tone-remove-btn" data-tone-remove="${i}" title="Quitar opción">✕</button>
+    </div>`;
+  }).join("");
 }
 function addTonesFromInput(){
   const raw = toneInputEl.value.trim();
   if(!raw) return;
+  const stockRaw = toneStockInputEl.value.trim();
+  const hasStock = stockRaw !== "";
+  const stock = hasStock ? Math.max(0, Math.floor(Number(stockRaw) || 0)) : null;
   raw.split(/[,;\n]+/).map(v=>v.trim()).filter(Boolean).forEach(t=>{
-    if(!formTones.some(x=>x.toLocaleLowerCase()===t.toLocaleLowerCase())) formTones.push(t);
+    const existing = formTones.find(x=>x.toLocaleLowerCase()===t.toLocaleLowerCase());
+    const target = existing || t;
+    if(!existing) formTones.push(t);
+    if(hasStock) formToneStocks[target] = stock;
   });
   toneInputEl.value = "";
+  toneStockInputEl.value = "";
   renderToneList();
 }
 document.getElementById("addToneBtn").addEventListener("click", addTonesFromInput);
 toneInputEl.addEventListener("keydown", e=>{ if(e.key==="Enter"){ e.preventDefault(); addTonesFromInput(); } });
+toneStockInputEl.addEventListener("keydown", e=>{ if(e.key==="Enter"){ e.preventDefault(); addTonesFromInput(); } });
+
 toneListEl.addEventListener("click", e=>{
   const btn=e.target.closest("[data-tone-remove]"); if(!btn) return;
-  formTones.splice(Number(btn.dataset.toneRemove),1); renderToneList();
+  const idx = Number(btn.dataset.toneRemove);
+  const tone = formTones[idx];
+  if(tone) delete formToneStocks[tone];
+  formTones.splice(idx,1);
+  renderToneList();
+});
+
+toneListEl.addEventListener("change", e=>{
+  const nameInput = e.target.closest("[data-tone-name-index]");
+  if(!nameInput) return;
+  const idx = Number(nameInput.dataset.toneNameIndex);
+  const oldTone = formTones[idx];
+  const newTone = nameInput.value.trim();
+  if(!newTone){ alert("El nombre del tono/color no puede quedar vacío."); renderToneList(); return; }
+  const duplicate = formTones.some((t,j)=>j!==idx && t.toLocaleLowerCase()===newTone.toLocaleLowerCase());
+  if(duplicate){ alert("Ese tono/color ya existe."); renderToneList(); return; }
+  if(oldTone === newTone) return;
+  const hadStock = Object.prototype.hasOwnProperty.call(formToneStocks,oldTone);
+  const oldStock = formToneStocks[oldTone];
+  formTones[idx] = newTone;
+  delete formToneStocks[oldTone];
+  if(hadStock) formToneStocks[newTone] = oldStock;
+  renderToneList();
+});
+
+toneListEl.addEventListener("input", e=>{
+  const stockInput = e.target.closest("[data-tone-stock-index]");
+  if(!stockInput) return;
+  const idx = Number(stockInput.dataset.toneStockIndex);
+  const tone = formTones[idx];
+  if(!tone) return;
+  if(stockInput.value === "") delete formToneStocks[tone];
+  else formToneStocks[tone] = Math.max(0, Math.floor(Number(stockInput.value) || 0));
+  const row = stockInput.closest(".tone-stock-row");
+  const status = row?.querySelector(".tone-stock-status");
+  if(status){
+    const stock = Object.prototype.hasOwnProperty.call(formToneStocks,tone) ? formToneStocks[tone] : null;
+    status.className = "tone-stock-status" + (stock===null ? " free" : stock<=0 ? " out" : "");
+    status.textContent = stock===null ? "Disponible · sin cantidad" : stock<=0 ? "Sin stock" : `${stock} disp.`;
+  }
 });
 
 const imgGalleryEl = document.getElementById("imgGallery");
@@ -1902,6 +2063,7 @@ function loadIntoForm(id){
   document.getElementById("fNew").checked = !!p.nuevo;
   document.getElementById("fOffer").checked = !!p.oferta;
   formTones = Array.isArray(p.tones) ? [...p.tones] : [];
+  formToneStocks = p.toneStock && typeof p.toneStock === "object" ? {...p.toneStock} : {};
   renderToneList();
   formImages = (p.images && p.images.length) ? [...p.images] : (p.image ? [p.image] : []);
   formVideoId = p.videoId || "";
@@ -1918,6 +2080,7 @@ function resetForm(){
   formImages = [];
   formVideoId = "";
   formTones = [];
+  formToneStocks = {};
   renderFormGallery();
   renderFormVideo();
   renderToneList();
@@ -1950,6 +2113,11 @@ form.addEventListener("submit", async e => {
     oferta: document.getElementById("fOffer").checked,
     precioAnterior: Number(document.getElementById("fOldPrice").value) || 0,
     tonos: formTones.slice(),
+    stockTonos: Object.fromEntries(
+      formTones
+        .filter(t=>Object.prototype.hasOwnProperty.call(formToneStocks,t))
+        .map(t=>[t, Math.max(0, Math.floor(Number(formToneStocks[t]) || 0))])
+    ),
     imagenes: formImages.slice(),
     videoId: formVideoId || "",
     orden: id ? (products.find(p=>p.id===id)?.orden ?? products.length+1) : products.length+1
