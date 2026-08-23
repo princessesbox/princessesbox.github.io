@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PRINCESSES_BOX · Catálogo de Belleza</title>
-<meta name="princessesbox-build" content="catalogo-editor-visual-v1">
+<meta name="princessesbox-build" content="catalogo-editor-visual-v2-tonos-desplegables">
 <meta name="description" content="Catálogo online de PRINCESSES_BOX: maquillaje, skincare, accesorios, uñas, pelo y más. Consultá productos y armá tu pedido por WhatsApp.">
 <meta name="theme-color" content="#C17F6A">
 <link rel="canonical" href="https://princessesbox.github.io/">
@@ -629,7 +629,17 @@
   .tone-add-row input{min-width:0;}
   .tone-stock-head{display:grid;grid-template-columns:minmax(140px,1fr) 110px auto;gap:8px;margin-bottom:6px;padding:0 8px;}
   .tone-stock-head span{font-size:.66rem;letter-spacing:.04em;text-transform:uppercase;color:var(--mauve);}
-  .product-tones{margin-top:2px;}
+  .product-tones{margin-top:4px;}
+  .product-tone-toggle{
+    width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:9px 11px;border:1px solid var(--blush-deep);border-radius:11px;background:var(--blush);
+    color:var(--terracotta-dark);font-size:.78rem;font-weight:600;text-align:left;transition:background .2s,border-color .2s;
+  }
+  .product-tone-toggle:hover{background:#fff;border-color:var(--terracotta);}
+  .product-tone-toggle-meta{display:inline-flex;align-items:center;gap:6px;color:var(--mauve);font-size:.68rem;font-weight:500;white-space:nowrap;}
+  .product-tone-chevron{display:inline-block;transition:transform .2s;font-size:.9rem;line-height:1;}
+  .product-tone-toggle[aria-expanded="true"] .product-tone-chevron{transform:rotate(180deg);}
+  .product-tone-panel{margin-top:7px;padding:10px;background:#fff;border:1px solid var(--blush-deep);border-radius:11px;}
   .product-tone-label{display:block;font-size:.72rem;color:var(--mauve);margin-bottom:5px;font-weight:500;}
   .product-tone-select{width:100%;border:1px solid var(--blush-deep);border-radius:10px;padding:9px 10px;background:var(--blush);color:var(--ink);font-family:inherit;font-size:.82rem;}
   .product-tone-select:focus{outline:2px solid var(--terracotta);outline-offset:1px;}
@@ -1532,14 +1542,20 @@ function renderGrid(){
         ${p.sku ? `<div class="product-sku">Cód: ${safeText(p.sku)}</div>` : ""}
         <div class="product-stock-indicator ${stockInfo.cls}">${safeText(stockInfo.label)}</div>
         ${tones.length ? `<div class="product-tones">
-          <label class="product-tone-label" for="tone-${safeText(p.id)}">🎨 Elegí tono / color</label>
-          <select class="product-tone-select" id="tone-${safeText(p.id)}" data-tone-for="${safeText(p.id)}">
-            ${tones.map(t=>{
-              const inStock = toneIsAvailable(p,t);
-              return `<option value="${safeText(t)}" ${!inStock?'disabled':''} ${t===firstAvailableTone?'selected':''}>${safeText(t)} — ${safeText(toneStockText(p,t))}</option>`;
-            }).join("")}
-          </select>
-          <div class="tone-preview">${tones.slice(0,8).map(t=>`<span class="${toneStockClass(p,t)}">${safeText(t)} · ${safeText(toneStockText(p,t))}</span>`).join("")}${tones.length>8?`<span>+${tones.length-8}</span>`:""}</div>
+          <button type="button" class="product-tone-toggle" data-tone-toggle="${safeText(p.id)}" aria-expanded="false" aria-controls="tone-panel-${safeText(p.id)}">
+            <span>🎨 Tonos / colores</span>
+            <span class="product-tone-toggle-meta">${tones.length} opción${tones.length===1?'':'es'} <span class="product-tone-chevron">⌄</span></span>
+          </button>
+          <div class="product-tone-panel hidden" id="tone-panel-${safeText(p.id)}">
+            <label class="product-tone-label" for="tone-${safeText(p.id)}">Elegí una opción</label>
+            <select class="product-tone-select" id="tone-${safeText(p.id)}" data-tone-for="${safeText(p.id)}">
+              ${tones.map(t=>{
+                const inStock = toneIsAvailable(p,t);
+                return `<option value="${safeText(t)}" ${!inStock?'disabled':''} ${t===firstAvailableTone?'selected':''}>${safeText(t)} — ${safeText(toneStockText(p,t))}</option>`;
+              }).join("")}
+            </select>
+            <div class="tone-preview">${tones.slice(0,8).map(t=>`<span class="${toneStockClass(p,t)}">${safeText(t)} · ${safeText(toneStockText(p,t))}</span>`).join("")}${tones.length>8?`<span>+${tones.length-8}</span>`:""}</div>
+          </div>
         </div>` : ""}
         <div class="product-actions">
           ${p.videoId ? `<button type="button" class="btn-video" data-video-product="${safeText(p.id)}">▶ Ver video</button>` : ""}
@@ -1568,6 +1584,18 @@ function moveMedia(media, dir){
 }
 
 document.getElementById("productsGrid").addEventListener("click", (e)=>{
+  const toneToggle = e.target.closest("[data-tone-toggle]");
+  if(toneToggle){
+    e.preventDefault(); e.stopPropagation();
+    const card = toneToggle.closest(".product-card");
+    const panel = card?.querySelector(".product-tone-panel");
+    if(panel){
+      const willOpen = panel.classList.contains("hidden");
+      panel.classList.toggle("hidden", !willOpen);
+      toneToggle.setAttribute("aria-expanded", String(willOpen));
+    }
+    return;
+  }
   const addCard = e.target.closest("[data-editor-add-card]");
   if(addCard && visualEditorMode){
     e.preventDefault(); e.stopPropagation();
