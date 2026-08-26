@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PRINCESSES_BOX · Catálogo de Belleza</title>
-<meta name="princessesbox-build" content="catalogo-tienda-pro-v1">
+<meta name="princessesbox-build" content="catalogo-tienda-pro-v3-acciones">
 <meta name="description" content="Catálogo online de PRINCESSES_BOX: maquillaje, skincare, accesorios, uñas, pelo y más. Consultá productos y armá tu pedido por WhatsApp.">
 <meta name="theme-color" content="#C17F6A">
 <link rel="canonical" href="https://princessesbox.github.io/">
@@ -861,8 +861,20 @@
   .product-card .product-desc{display:none}
   .product-card-quickmeta{display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-top:1px}
   .product-card-chip{display:inline-flex;align-items:center;gap:4px;padding:4px 7px;border-radius:999px;background:var(--blush);border:1px solid var(--blush-deep);font-size:.62rem;color:var(--mauve)}
-  .btn-detail{width:100%;padding:10px 12px;border-radius:11px;background:var(--blush);border:1px solid var(--blush-deep);color:var(--terracotta-dark);font-size:.78rem;font-weight:650;margin-top:2px}
-  .btn-detail:hover{background:#fff;border-color:var(--terracotta)}
+  .product-card-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:4px}
+  .card-action{min-width:0;min-height:39px;padding:8px 6px;border-radius:10px;font-size:.69rem;font-weight:700;line-height:1.1;display:flex;align-items:center;justify-content:center;gap:4px;text-align:center;transition:transform .18s,filter .18s,background .18s,border-color .18s}
+  .card-action:hover:not(:disabled){transform:translateY(-1px);filter:brightness(.98)}
+  .card-action.detail{background:var(--blush);border:1px solid var(--blush-deep);color:var(--terracotta-dark)}
+  .card-action.detail:hover{background:#fff;border-color:var(--terracotta)}
+  .card-action.add{background:var(--terracotta);border:1px solid var(--terracotta);color:#fff}
+  .card-action.wsp{background:#25D366;border:1px solid #25D366;color:#fff}
+  .card-action:disabled{background:var(--grey);border-color:var(--grey);color:#fff;cursor:not-allowed;opacity:.78}
+  .card-action .ico{font-size:.82rem;line-height:1}
+  @media (max-width:620px){
+    .product-card-actions{gap:4px}
+    .card-action{min-height:37px;padding:7px 3px;font-size:.58rem;gap:2px;border-radius:9px}
+    .card-action .ico{font-size:.72rem}
+  }
 
   .product-detail-overlay{position:fixed;inset:0;z-index:150;background:rgba(32,24,22,.72);display:flex;align-items:center;justify-content:center;padding:18px}
   .product-detail-dialog{width:min(1040px,97vw);max-height:94vh;overflow:auto;background:var(--cream);border-radius:22px;box-shadow:0 30px 90px rgba(20,14,12,.35);position:relative}
@@ -921,15 +933,56 @@
   .admin-top-list{margin-top:12px;display:grid;gap:6px}
   .admin-top-row{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;border-bottom:1px solid var(--blush-deep);padding:6px 2px;font-size:.74rem}.admin-top-row:last-child{border-bottom:0}.admin-top-metric{color:var(--mauve);white-space:nowrap}
 
+  /* ---------- V2 · vistos recientemente ---------- */
+  .recently-viewed{padding-top:0;padding-bottom:10px}
+  .recently-viewed .showcase-block{margin-top:6px;border-top:1px solid var(--blush-deep);padding-top:18px}
+  .recently-clear{font-size:.7rem;color:var(--mauve);border:1px solid var(--blush-deep);background:#fff;border-radius:999px;padding:7px 10px}
+  .recently-clear:hover{color:var(--terracotta-dark);border-color:var(--terracotta)}
+
+  /* ---------- V2 · dashboard comercial ---------- */
+  .analytics-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:10px 0 4px}
+  .analytics-periods{display:flex;gap:6px;flex-wrap:wrap}
+  .analytics-period-btn{border:1px solid var(--blush-deep);background:#fff;color:var(--ink-soft);border-radius:999px;padding:7px 10px;font-size:.72rem;font-weight:650}
+  .analytics-period-btn.active{background:var(--terracotta-dark);border-color:var(--terracotta-dark);color:#fff}
+  .analytics-refresh{border:1px solid var(--blush-deep);background:var(--blush);color:var(--terracotta-dark);border-radius:999px;padding:7px 10px;font-size:.7rem;font-weight:650}
+  .analytics-status{font-size:.68rem;color:var(--mauve);min-height:18px;margin-top:5px}
+  .analytics-rank-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+  .analytics-rank-card{border:1px solid var(--blush-deep);background:#fff;border-radius:13px;padding:11px;min-width:0}
+  .analytics-rank-card h4{font-family:'Playfair Display',serif;color:var(--terracotta-dark);font-size:.92rem;margin-bottom:7px}
+  .analytics-rank-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--blush);font-size:.72rem}
+  .analytics-rank-row:last-child{border-bottom:0}
+  .analytics-rank-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
+  .analytics-rank-value{white-space:nowrap;color:var(--mauve);font-weight:650}
+  .analytics-empty{font-size:.7rem;color:var(--mauve);padding:8px 0}
+  .admin-stat-card.emphasis{background:#fff;border-color:#e5c5bb}
+  .admin-stat-card .sub{font-size:.58rem;color:var(--grey);margin-top:2px}
+
+  /* ---------- V2 · necesitan atención ---------- */
+  .attention-panel{background:#fffaf6;border:1px solid #edd4c8;border-radius:16px;padding:14px;margin:0 0 18px}
+  .attention-head{display:flex;justify-content:space-between;gap:10px;align-items:start}
+  .attention-head .admin-title{margin:0}
+  .attention-summary{font-size:.75rem;color:var(--mauve);margin-top:3px}
+  .attention-counts{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+  .attention-chip{background:#fff;border:1px solid var(--blush-deep);border-radius:999px;padding:5px 8px;font-size:.65rem;color:var(--ink-soft)}
+  .attention-list{display:grid;gap:7px;max-height:310px;overflow:auto}
+  .attention-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;background:#fff;border:1px solid var(--blush-deep);border-radius:11px;padding:9px}
+  .attention-name{font-size:.78rem;font-weight:650;color:var(--ink);line-height:1.2}
+  .attention-issues{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
+  .attention-issue{font-size:.59rem;border-radius:999px;padding:3px 6px;background:var(--blush);color:var(--mauve);border:1px solid var(--blush-deep)}
+  .attention-edit{border:1px solid var(--terracotta);color:var(--terracotta-dark);background:#fff;border-radius:9px;padding:7px 9px;font-size:.68rem;font-weight:650}
+  .attention-ok{font-size:.76rem;color:#4b8664;background:#edf7ef;border:1px solid #d7eadb;border-radius:11px;padding:10px}
+
   .lightbox{z-index:180}.video-modal{z-index:185}
 
   @media (max-width:760px){
     .pd-content{padding:18px 14px 20px}.pd-grid{grid-template-columns:1fr;gap:16px}.pd-main{aspect-ratio:4/3}.pd-title{font-size:1.55rem}.pd-related-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.pd-actions{grid-template-columns:1fr 1fr}.product-detail-overlay{padding:8px}.product-detail-dialog{max-height:97vh;border-radius:17px}
     .home-showcase{padding-inline:4vw}.showcase-strip{grid-auto-columns:minmax(160px,72vw)}
     .admin-stats-grid{grid-template-columns:repeat(2,1fr)}
+    .analytics-rank-grid{grid-template-columns:1fr}
   }
   @media (max-width:430px){
     .pd-actions{grid-template-columns:1fr}.pd-related-grid{grid-template-columns:1fr 1fr 1fr}.pd-related-card img,.pd-related-ph{height:76px}.pd-related-name{font-size:.66rem}.promo-bar button{font-size:.7rem}
+    .attention-row{grid-template-columns:1fr}.attention-edit{width:100%}
   }
 
 </style>
@@ -1071,6 +1124,17 @@
   </div>
 </section>
 
+
+<section class="home-showcase recently-viewed hidden" id="recentlyViewedSection" aria-label="Productos vistos recientemente">
+  <div class="showcase-block">
+    <div class="showcase-head">
+      <div><h3>👀 Viste recientemente</h3><p>Volvé rápido a los productos que estuviste mirando.</p></div>
+      <button type="button" class="recently-clear" id="clearRecentlyViewed">Limpiar</button>
+    </div>
+    <div class="showcase-strip" id="recentlyViewedStrip"></div>
+  </div>
+</section>
+
 <div class="editor-help" id="editorHelp">👑 Estás viendo el catálogo como administrador. Elegí una categoría y usá <strong>“Nuevo aquí”</strong>, o tocá ✏️ en cualquier producto para editarlo.</div>
 
 <section class="catalogo" id="catalogo">
@@ -1170,6 +1234,19 @@
     <div class="admin-title admin-title-main">Administrar catálogo</div>
     <div class="admin-sub admin-sub-main">Editá este producto sin salir de la vista del catálogo. Los cambios se guardan automáticamente en Firestore.</div>
 
+
+    <div class="attention-panel admin-full-only" id="adminAttentionPanel">
+      <div class="attention-head">
+        <div>
+          <div class="admin-title" style="font-size:1.05rem;">⚠️ Necesitan atención</div>
+          <div class="attention-summary" id="attentionSummary">Revisando catálogo…</div>
+        </div>
+        <button type="button" class="analytics-refresh" id="attentionRefresh">↻ Actualizar</button>
+      </div>
+      <div class="attention-counts" id="attentionCounts"></div>
+      <div class="attention-list" id="attentionList"></div>
+    </div>
+
     <form class="admin-form" id="productForm">
       <input type="hidden" id="editId">
       <div class="field full">
@@ -1265,9 +1342,19 @@
     <div class="admin-list admin-full-only" id="adminList" style="margin-top:14px;"></div>
 
     <div class="admin-section admin-full-only">
-      <div class="admin-title" style="font-size:1.05rem;">📊 Estadísticas privadas</div>
-      <div class="admin-sub" style="margin-bottom:8px;">Resumen del catálogo. Las vistas y consultas se cuentan desde esta versión.</div>
+      <div class="admin-title" style="font-size:1.05rem;">📊 Tablero comercial privado</div>
+      <div class="admin-sub" style="margin-bottom:4px;">Actividad por período. Los visitantes únicos son aproximados por navegador/dispositivo y no guardan datos personales.</div>
+      <div class="analytics-toolbar">
+        <div class="analytics-periods" id="analyticsPeriods">
+          <button type="button" class="analytics-period-btn" data-stats-days="1">Hoy</button>
+          <button type="button" class="analytics-period-btn active" data-stats-days="7">Últimos 7 días</button>
+          <button type="button" class="analytics-period-btn" data-stats-days="30">Últimos 30 días</button>
+        </div>
+        <button type="button" class="analytics-refresh" id="analyticsRefresh">↻ Actualizar</button>
+      </div>
+      <div class="analytics-status" id="analyticsStatus">Los datos por período comienzan a registrarse con esta versión.</div>
       <div class="admin-stats-grid" id="adminStatsGrid"></div>
+      <div class="analytics-rank-grid" id="analyticsRankGrid"></div>
       <div class="admin-top-list" id="adminTopProducts"></div>
     </div>
 
@@ -1342,7 +1429,7 @@ const ADMIN_PIN = "123098";                   // PIN para entrar al panel de adm
 const DRIVE_UPLOADER_URL = "https://script.google.com/macros/s/AKfycby7upvtYD-qjsEeyBj3nZGUTmJgxF6SDf_XQBx6eZFK4kY5q47PegQK6uHtA7n4fKhkBg/exec"; // Google Apps Script para subir fotos y video a Drive
 const INSTAGRAM_URL = "https://www.instagram.com/princesses_boxx?igsh=MTVwNmU5c3JiNHF0dA==";
 const TIKTOK_URL = "https://vm.tiktok.com/ZS9kMBMLv3sBC-nyeRD/";
-const BUILD_VERSION = "b12-tienda-pro";
+const BUILD_VERSION = "b14-card-actions";
 /* Estas son las categorías que se ven la PRIMERA vez que entra alguien al link.
    Se sincronizan con Firestore. Podés administrarlas desde el panel
    (para eso está la sección "Categorías" dentro del panel). */
@@ -1448,7 +1535,8 @@ function iniciarProductosFirestore(){
     renderCatManager();
     renderHeaderCategories();
     renderShowcase();
-    renderAdminStats();
+    renderRecentlyViewed();
+    renderAttentionPanel();
     renderCart();
     openProductFromHashIfNeeded();
     console.log("🔥 Productos recibidos desde Firestore:", products.length);
@@ -1558,7 +1646,9 @@ function compareCatalogProducts(a,b){
 
 /* ---------- render categorías ---------- */
 function selectCategory(catId, {scroll=true} = {}){
+  const previousCategory = activeCategory;
   activeCategory = catId || "todos";
+  if(activeCategory !== previousCategory) recordCategoryVisit(activeCategory);
   updateVisualEditorContext();
   // Elegir una categoría vuelve a la navegación por categorías y limpia una búsqueda anterior.
   if(searchTerm) setSearchTerm("", {focusMain:false});
@@ -1620,13 +1710,129 @@ function safeText(value){
     .replaceAll('"',"&quot;").replaceAll("'","&#039;");
 }
 
+/* ---------- imágenes optimizadas ---------- */
+function sizedImageUrl(src, width=480){
+  const raw = String(src || "").trim();
+  if(!raw || raw.startsWith("data:") || raw.startsWith("blob:")) return raw;
+  try{
+    const u = new URL(raw, location.href);
+    if(u.hostname.includes("drive.google.com")){
+      let id = u.searchParams.get("id");
+      if(!id){ const m = u.pathname.match(/\/file\/d\/([^/]+)/); if(m) id = m[1]; }
+      if(id) return `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w${Math.max(80,Math.round(width))}`;
+    }
+  }catch(_){ }
+  return raw;
+}
+const catalogImageUrl = src => sizedImageUrl(src, 520);
+const miniImageUrl = src => sizedImageUrl(src, 220);
+const fullImageUrl = src => sizedImageUrl(src, 1600);
+
 /* ---------- métricas privadas ---------- */
 async function recordProductMetric(id, field, amount=1){
   const fb = window.pbFirebase;
-  if(!fb?.increment || !id) return;
+  if(!fb?.increment || !id || analyticsDisabled()) return;
   try{
     await fb.updateDoc(fb.doc(fb.db,"productos",id), {[field]: fb.increment(amount)});
   }catch(err){ console.warn("No se pudo registrar métrica", field, err); }
+}
+
+/* ---------- analítica diaria V2 ---------- */
+const PB_ANALYTICS_ADMIN_DEVICE = "pb_admin_device_v2";
+const PB_ANALYTICS_VISITOR = "pb_visitor_v2";
+const PB_RECENT_KEY = "pb_recent_products_v2";
+let adminStatsPeriod = 7;
+
+function analyticsDisabled(){
+  try{ return document.body.classList.contains("visual-editor-mode") || localStorage.getItem(PB_ANALYTICS_ADMIN_DEVICE)==="1"; }
+  catch(_){ return document.body.classList.contains("visual-editor-mode"); }
+}
+function localDayKey(date=new Date()){
+  const y=date.getFullYear(), m=String(date.getMonth()+1).padStart(2,"0"), d=String(date.getDate()).padStart(2,"0");
+  return `${y}-${m}-${d}`;
+}
+function statsDocId(day){ return "stats_" + String(day).replaceAll("-",""); }
+function analyticsKey(value){ return encodeURIComponent(String(value ?? "")).replaceAll(".","%2E"); }
+function analyticsUnkey(value){ try{return decodeURIComponent(String(value||"").replaceAll("%2E","."));}catch(_){return String(value||"");} }
+function anonymousVisitorId(){
+  try{
+    let id=localStorage.getItem(PB_ANALYTICS_VISITOR);
+    if(!id){
+      const rand = globalThis.crypto?.randomUUID?.() || `${Date.now()}_${Math.random().toString(36).slice(2)}`;
+      id = `v_${rand}`; localStorage.setItem(PB_ANALYTICS_VISITOR,id);
+    }
+    return id;
+  }catch(_){ return ""; }
+}
+async function updateDailyStats({counters={}, maps={}, sets={}}={}){
+  const fb=window.pbFirebase;
+  if(!fb?.increment || !fb?.setDoc || !fb?.updateDoc || analyticsDisabled()) return;
+  const day=localDayKey();
+  const ref=fb.doc(fb.db,"configuracion",statsDocId(day));
+  const updates={};
+  Object.entries(counters).forEach(([k,v])=>{ const n=Number(v)||0; if(n) updates[k]=fb.increment(n); });
+  Object.entries(maps).forEach(([mapName,items])=>{
+    Object.entries(items||{}).forEach(([key,val])=>{ const n=Number(val)||0; if(n) updates[`${mapName}.${analyticsKey(key)}`]=fb.increment(n); });
+  });
+  Object.entries(sets).forEach(([mapName,items])=>{
+    Object.entries(items||{}).forEach(([key,val])=>{ updates[`${mapName}.${analyticsKey(key)}`]=val; });
+  });
+  try{
+    await fb.setDoc(ref,{fecha:day,ultimaActividad:Date.now()},{merge:true});
+    if(Object.keys(updates).length) await fb.updateDoc(ref,updates);
+  }catch(err){ console.warn("No se pudo registrar analítica diaria",err); }
+}
+function recordSiteVisit(){
+  if(analyticsDisabled()) return;
+  const visitor=anonymousVisitorId();
+  updateDailyStats({counters:{siteVisits:1},sets:visitor?{visitorIds:{[visitor]:1}}:{}});
+}
+function recordProductView(p){
+  if(!p || analyticsDisabled()) return;
+  recordProductMetric(p.id,"vistasFicha",1);
+  updateDailyStats({counters:{productViewsTotal:1},maps:{productViews:{[p.id]:1}}});
+}
+function recordProductWhatsApp(p){
+  if(!p || analyticsDisabled()) return;
+  recordProductMetric(p.id,"consultasWhatsApp",1);
+  updateDailyStats({counters:{whatsappTotal:1},maps:{productWhatsApp:{[p.id]:1}}});
+}
+function recordProductShare(p){
+  if(!p || analyticsDisabled()) return;
+  recordProductShare(p);
+  updateDailyStats({counters:{sharesTotal:1},maps:{productShares:{[p.id]:1}}});
+}
+function recordCategoryVisit(categoryId){
+  if(!categoryId || categoryId==="todos" || analyticsDisabled()) return;
+  updateDailyStats({maps:{categoryViews:{[categoryId]:1}}});
+}
+function recordOrderAnalytics(rows,total){
+  if(analyticsDisabled()) return;
+  const productMap={};
+  [...new Set(rows.map(x=>x.p?.id).filter(Boolean))].forEach(id=>productMap[id]=1);
+  updateDailyStats({counters:{whatsappTotal:1,orders:1,orderValue:Number(total)||0},maps:{productWhatsApp:productMap}});
+}
+
+/* ---------- vistos recientemente ---------- */
+function recentProductIds(){
+  try{ const ids=JSON.parse(localStorage.getItem(PB_RECENT_KEY)||"[]"); return Array.isArray(ids)?ids.map(String):[]; }catch(_){ return []; }
+}
+function rememberRecentlyViewed(id){
+  if(!id) return;
+  try{
+    const ids=recentProductIds().filter(x=>x!==id); ids.unshift(id);
+    localStorage.setItem(PB_RECENT_KEY,JSON.stringify(ids.slice(0,10)));
+  }catch(_){ }
+  renderRecentlyViewed();
+}
+function renderRecentlyViewed(){
+  const section=document.getElementById("recentlyViewedSection"), strip=document.getElementById("recentlyViewedStrip");
+  if(!section || !strip) return;
+  if(document.body.classList.contains("visual-editor-mode")){ section.classList.add("hidden"); return; }
+  const list=recentProductIds().map(id=>products.find(p=>p.id===id)).filter(Boolean).slice(0,5);
+  if(!list.length){ section.classList.add("hidden"); strip.innerHTML=""; return; }
+  strip.innerHTML=list.map(p=>showcaseCardHtml(p,"👀 Visto")).join("");
+  section.classList.remove("hidden");
 }
 
 /* ---------- Ofertas + novedades ---------- */
@@ -1635,7 +1841,7 @@ function showcaseCardHtml(p, badge){
   const stock = productStockInfo(p);
   return `<button type="button" class="showcase-card" data-showcase-product="${safeText(p.id)}">
     <div class="showcase-card-media">
-      ${thumb ? `<img src="${safeText(thumb)}" alt="${safeText(p.name)}" loading="lazy">` : `<span style="font-size:2.5rem">${catIcon(p.category)}</span>`}
+      ${thumb ? `<img src="${safeText(catalogImageUrl(thumb))}" alt="${safeText(p.name)}" loading="lazy" decoding="async">` : `<span style="font-size:2.5rem">${catIcon(p.category)}</span>`}
       <span class="mini-badge">${safeText(badge)}</span>
     </div>
     <div class="showcase-card-copy">
@@ -1674,6 +1880,15 @@ document.getElementById("homeShowcase")?.addEventListener("click", e=>{
   }
 });
 
+document.getElementById("recentlyViewedSection")?.addEventListener("click", e=>{
+  const pBtn=e.target.closest("[data-showcase-product]");
+  if(pBtn){ openProductDetail(pBtn.dataset.showcaseProduct); return; }
+});
+document.getElementById("clearRecentlyViewed")?.addEventListener("click", ()=>{
+  try{ localStorage.removeItem(PB_RECENT_KEY); }catch(_){ }
+  renderRecentlyViewed();
+});
+
 /* ---------- render grilla de productos ---------- */
 function renderGrid(){
   const grid = document.getElementById("productsGrid");
@@ -1705,7 +1920,7 @@ function renderGrid(){
 
   grid.innerHTML = editorAddCard + list.map(p => {
     const imgs = (p.images && p.images.length) ? p.images : [];
-    const hasMulti = imgs.length > 1;
+    const thumb = imgs[0] || "";
     const oldPrice = Number(p.precioAnterior || 0);
     const showOldPrice = p.oferta && oldPrice > Number(p.price || 0);
     const tones = Array.isArray(p.tones) ? p.tones.filter(Boolean) : [];
@@ -1723,12 +1938,7 @@ function renderGrid(){
           ${p.nuevo ? `<span class="badge-nuevo">🆕 Nuevo</span>` : ""}
           ${p.oferta ? `<span class="badge-oferta">🔥 Oferta</span>` : ""}
         </div>
-        ${imgs.length ? imgs.map((src,i)=>`<img src="${safeText(src)}" class="pm-img ${i===0?'active':''}" data-idx="${i}" alt="${safeText(p.name)}" loading="lazy">`).join("") : `<span class="placeholder-icon">${catIcon(p.category)}</span>`}
-        ${hasMulti ? `
-          <button type="button" class="pm-nav prev" data-dir="-1" aria-label="Foto anterior">‹</button>
-          <button type="button" class="pm-nav next" data-dir="1" aria-label="Foto siguiente">›</button>
-          <div class="pm-dots">${imgs.map((_,i)=>`<span class="pm-dot ${i===0?'active':''}"></span>`).join("")}</div>
-        ` : ""}
+        ${thumb ? `<img src="${safeText(catalogImageUrl(thumb))}" class="pm-img active" data-idx="0" alt="${safeText(p.name)}" loading="lazy" decoding="async">` : `<span class="placeholder-icon">${catIcon(p.category)}</span>`}
       </div>
       <div class="product-body">
         <div class="product-cat">${catIcon(p.category)} ${safeText(catLabel(p.category))}</div>
@@ -1739,10 +1949,15 @@ function renderGrid(){
         </div>
         <div class="product-stock-indicator ${stockInfo.cls}">${safeText(stockInfo.label)}</div>
         <div class="product-card-quickmeta">
+          ${imgs.length>1 ? `<span class="product-card-chip">📷 ${imgs.length} fotos</span>` : ""}
           ${tones.length ? `<span class="product-card-chip">🎨 ${tones.length} opción${tones.length===1?'':'es'}</span>` : ""}
           ${p.videoId ? `<span class="product-card-chip">🎬 Video</span>` : ""}
         </div>
-        <button type="button" class="btn-detail" data-open-product="${safeText(p.id)}">Ver detalles</button>
+        <div class="product-card-actions" aria-label="Acciones rápidas de ${safeText(p.name)}">
+          <button type="button" class="card-action detail" data-card-detail="${safeText(p.id)}"><span class="ico">👁</span><span>Detalles</span></button>
+          <button type="button" class="card-action add" data-card-add="${safeText(p.id)}" ${available?'':'disabled'}><span class="ico">🛍️</span><span>Agregar</span></button>
+          <button type="button" class="card-action wsp" data-card-wsp="${safeText(p.id)}" ${available?'':'disabled'}><span class="ico">💬</span><span>WhatsApp</span></button>
+        </div>
       </div>
     </article>`;
   }).join("");
@@ -1771,6 +1986,51 @@ document.getElementById("productsGrid").addEventListener("click", (e)=>{
   if(visualDelete && visualEditorMode){ e.preventDefault(); e.stopPropagation(); deleteProduct(visualDelete.dataset.visualDelete); return; }
   const nav = e.target.closest(".pm-nav");
   if(nav){ e.preventDefault(); e.stopPropagation(); moveMedia(nav.closest(".product-media"), Number(nav.dataset.dir)); return; }
+  const detailBtn = e.target.closest("[data-card-detail]");
+  if(detailBtn){
+    e.preventDefault(); e.stopPropagation();
+    openProductDetail(detailBtn.dataset.cardDetail);
+    return;
+  }
+  const addBtn = e.target.closest("[data-card-add]");
+  if(addBtn){
+    e.preventDefault(); e.stopPropagation();
+    const p = products.find(x=>x.id===addBtn.dataset.cardAdd);
+    if(!p || !productHasAvailability(p)) return;
+    const tones = Array.isArray(p.tones) ? p.tones.filter(Boolean) : [];
+    if(tones.length){
+      openProductDetail(p.id);
+      setTimeout(()=>{
+        const toggle=document.querySelector('[data-pd-tone-toggle]');
+        const panel=document.getElementById('pdTonePanel');
+        if(toggle && panel){ panel.classList.remove('hidden'); toggle.setAttribute('aria-expanded','true'); }
+      },40);
+    }else{
+      addToCart(p.id, "");
+      const label=addBtn.querySelector('span:last-child');
+      if(label){ const old=label.textContent; label.textContent='Agregado ✓'; setTimeout(()=>label.textContent=old,900); }
+    }
+    return;
+  }
+  const wspBtn = e.target.closest("[data-card-wsp]");
+  if(wspBtn){
+    e.preventDefault(); e.stopPropagation();
+    const p = products.find(x=>x.id===wspBtn.dataset.cardWsp);
+    if(!p || !productHasAvailability(p)) return;
+    const tones = Array.isArray(p.tones) ? p.tones.filter(Boolean) : [];
+    if(tones.length){
+      openProductDetail(p.id);
+      setTimeout(()=>{
+        const toggle=document.querySelector('[data-pd-tone-toggle]');
+        const panel=document.getElementById('pdTonePanel');
+        if(toggle && panel){ panel.classList.remove('hidden'); toggle.setAttribute('aria-expanded','true'); }
+      },40);
+    }else{
+      recordProductWhatsApp(p);
+      window.open(wspLinkFor(p), "_blank", "noopener");
+    }
+    return;
+  }
   const card = e.target.closest("[data-product-card]");
   if(card){
     const media = e.target.closest(".product-media");
@@ -1783,13 +2043,13 @@ document.getElementById("productsGrid").addEventListener("click", (e)=>{
 let touchStartX = 0, touchStartY = 0;
 document.getElementById("productsGrid").addEventListener("touchstart", (e)=>{
   const media = e.target.closest(".product-media");
-  if(!media || !e.touches[0]) return;
+  if(!media || media.querySelectorAll(".pm-img").length < 2 || !e.touches[0]) return;
   touchStartX = e.touches[0].clientX;
   touchStartY = e.touches[0].clientY;
 }, {passive:true});
 document.getElementById("productsGrid").addEventListener("touchend", (e)=>{
   const media = e.target.closest(".product-media");
-  if(!media || !e.changedTouches[0]) return;
+  if(!media || media.querySelectorAll(".pm-img").length < 2 || !e.changedTouches[0]) return;
   const dx = e.changedTouches[0].clientX - touchStartX;
   const dy = e.changedTouches[0].clientY - touchStartY;
   if(Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)){
@@ -1808,7 +2068,7 @@ function renderLightbox(){
   const imgs = p.images || [];
   if(!imgs.length) return closeLightbox();
   lightboxIndex = (lightboxIndex + imgs.length) % imgs.length;
-  document.getElementById("lightboxImg").src = imgs[lightboxIndex];
+  document.getElementById("lightboxImg").src = fullImageUrl(imgs[lightboxIndex]);
   document.getElementById("lightboxImg").alt = p.name;
   document.getElementById("lightboxCaption").textContent = `${p.name}${imgs.length>1 ? ` · ${lightboxIndex+1}/${imgs.length}` : ''}`;
   document.getElementById("lightboxPrev").classList.toggle("hidden", imgs.length < 2);
@@ -1896,10 +2156,10 @@ function renderProductDetail(){
     <div class="pd-grid">
       <div>
         <div class="pd-main">
-          ${imgs.length ? `<img src="${safeText(imgs[detailImageIndex])}" alt="${safeText(p.name)}" data-pd-zoom="1">` : `<div class="pd-main-placeholder">${catIcon(p.category)}</div>`}
+          ${imgs.length ? `<img src="${safeText(fullImageUrl(imgs[detailImageIndex]))}" alt="${safeText(p.name)}" data-pd-zoom="1" decoding="async" fetchpriority="high">` : `<div class="pd-main-placeholder">${catIcon(p.category)}</div>`}
           ${imgs.length>1 ? `<button type="button" class="pd-gallery-nav prev" data-pd-nav="-1" aria-label="Foto anterior">‹</button><button type="button" class="pd-gallery-nav next" data-pd-nav="1" aria-label="Foto siguiente">›</button>` : ""}
         </div>
-        ${imgs.length>1 ? `<div class="pd-thumbs">${imgs.map((src,i)=>`<button type="button" class="pd-thumb ${i===detailImageIndex?'active':''}" data-pd-thumb="${i}"><img src="${safeText(src)}" alt="Foto ${i+1} de ${safeText(p.name)}"></button>`).join("")}</div>` : ""}
+        ${imgs.length>1 ? `<div class="pd-thumbs">${imgs.map((src,i)=>`<button type="button" class="pd-thumb ${i===detailImageIndex?'active':''}" data-pd-thumb="${i}"><img src="${safeText(miniImageUrl(src))}" alt="Foto ${i+1} de ${safeText(p.name)}" loading="lazy" decoding="async"></button>`).join("")}</div>` : ""}
       </div>
       <div>
         <div class="pd-kicker">${catIcon(p.category)} ${safeText(catLabel(p.category))}</div>
@@ -1928,7 +2188,7 @@ function renderProductDetail(){
     </div>
     ${related.length ? `<div class="pd-related"><h3>También te puede gustar...</h3><div class="pd-related-grid">${related.map(r=>{
       const th=r.images?.[0]||"";
-      return `<button type="button" class="pd-related-card" data-related-product="${safeText(r.id)}">${th?`<img src="${safeText(th)}" alt="${safeText(r.name)}" loading="lazy">`:`<div class="pd-related-ph">${catIcon(r.category)}</div>`}<div class="pd-related-copy"><div class="pd-related-name">${safeText(r.name)}</div><div class="pd-related-price">${fmtPrice(r.price)}</div></div></button>`;
+      return `<button type="button" class="pd-related-card" data-related-product="${safeText(r.id)}">${th?`<img src="${safeText(catalogImageUrl(th))}" alt="${safeText(r.name)}" loading="lazy" decoding="async">`:`<div class="pd-related-ph">${catIcon(r.category)}</div>`}<div class="pd-related-copy"><div class="pd-related-name">${safeText(r.name)}</div><div class="pd-related-price">${fmtPrice(r.price)}</div></div></button>`;
     }).join("")}</div></div>` : ""}
   `;
 }
@@ -1938,7 +2198,8 @@ function openProductDetail(id, {updateHash=true, track=true}={}){
   productDetailOverlay.classList.remove("hidden"); productDetailOverlay.setAttribute("aria-hidden","false");
   document.body.style.overflow = "hidden";
   if(updateHash && location.hash !== `#producto-${id}`) history.replaceState(null,"",productLink(p));
-  if(track) recordProductMetric(id,"vistasFicha",1);
+  rememberRecentlyViewed(id);
+  if(track) recordProductView(p);
 }
 function closeProductDetail({clearHash=true}={}){
   productDetailOverlay.classList.add("hidden"); productDetailOverlay.setAttribute("aria-hidden","true");
@@ -1971,7 +2232,7 @@ productDetailOverlay?.addEventListener("click", e=>{
   const toneT=e.target.closest("[data-pd-tone-toggle]"); if(toneT){ const panel=document.getElementById("pdTonePanel"); const willOpen=panel?.classList.contains("hidden"); panel?.classList.toggle("hidden",!willOpen); toneT.setAttribute("aria-expanded",String(!!willOpen)); return; }
   if(e.target.closest("[data-pd-video]")){ openProductVideo(p.id); return; }
   if(e.target.closest("[data-pd-add]")){ addToCart(p.id,detailToneValue()); return; }
-  if(e.target.closest("[data-pd-wsp]")){ recordProductMetric(p.id,"consultasWhatsApp",1); window.open(wspLinkFor(p,detailToneValue()),"_blank","noopener"); return; }
+  if(e.target.closest("[data-pd-wsp]")){ recordProductWhatsApp(p); window.open(wspLinkFor(p,detailToneValue()),"_blank","noopener"); return; }
   if(e.target.closest("[data-pd-share]")){ shareProduct(p); return; }
   if(e.target.closest("[data-pd-edit]") && visualEditorMode){ closeProductDetail(); openQuickProductEditor(p.id); return; }
   const rel=e.target.closest("[data-related-product]"); if(rel){ openProductDetail(rel.dataset.relatedProduct); }
@@ -2018,7 +2279,7 @@ function suggestionMatches(p, value){
 }
 function suggestionHtml(p){
   const th=p.images?.[0]||"";
-  return `<button type="button" class="search-suggestion" data-suggest-product="${safeText(p.id)}">${th?`<img src="${safeText(th)}" alt="">`:`<span class="search-suggestion-ph">${catIcon(p.category)}</span>`}<span><span class="search-suggestion-name">${safeText(p.name)}</span><span class="search-suggestion-cat">${safeText(catLabel(p.category))}</span></span><span class="search-suggestion-price">${fmtPrice(p.price)}</span></button>`;
+  return `<button type="button" class="search-suggestion" data-suggest-product="${safeText(p.id)}">${th?`<img src="${safeText(miniImageUrl(th))}" alt="" loading="lazy" decoding="async">`:`<span class="search-suggestion-ph">${catIcon(p.category)}</span>`}<span><span class="search-suggestion-name">${safeText(p.name)}</span><span class="search-suggestion-cat">${safeText(catLabel(p.category))}</span></span><span class="search-suggestion-price">${fmtPrice(p.price)}</span></button>`;
 }
 function renderSuggestions(value, el){
   if(!el) return;
@@ -2196,7 +2457,7 @@ function renderCart(){
     const thumb = p.images && p.images[0];
     const key = cartKey(p.id,item.tone||"");
     return `<div class="cart-item">
-      ${thumb ? `<img src="${safeText(thumb)}" alt="">` : `<div class="cart-ph">${catIcon(p.category)}</div>`}
+      ${thumb ? `<img src="${safeText(miniImageUrl(thumb))}" alt="" loading="lazy" decoding="async">` : `<div class="cart-ph">${catIcon(p.category)}</div>`}
       <div>
         <div class="cart-item-name">${safeText(p.name)}</div>
         ${item.tone ? `<div class="cart-item-tone">🎨 Tono/Color: <strong>${safeText(item.tone)}</strong></div>` : ""}
@@ -2225,15 +2486,21 @@ document.getElementById("sendCartWhatsapp").addEventListener("click", ()=>{
   const total = rows.reduce((s,x)=>s+(Number(x.p.price)||0)*x.item.qty,0);
   const lines = rows.map(({item,p})=>`• ${item.qty} × ${p.name}${item.tone ? ` · Tono/Color: ${item.tone}` : ""} — ${fmtPrice((Number(p.price)||0)*item.qty)}`);
   const msg = `Hola! 💕 Quiero hacer este pedido en PRINCESSES_BOX:\n\n${lines.join("\\n")}\n\n*Total estimado: ${fmtPrice(total)}*\n\n¿Me confirmás disponibilidad y forma de entrega?`;
-  [...new Set(rows.map(x=>x.p.id))].forEach(id=>recordProductMetric(id,"consultasWhatsApp",1));
+  [...new Set(rows.map(x=>x.p.id))].forEach(id=>{ const p=products.find(x=>x.id===id); if(p) recordProductMetric(id,"consultasWhatsApp",1); });
+  recordOrderAnalytics(rows,total);
   window.open(wspBase + "?text=" + encodeURIComponent(msg), "_blank", "noopener");
 });
 
 document.getElementById("promoBarBtn")?.addEventListener("click", ()=>{
   const text=String(siteText.promoText||"").trim();
   const msg=text ? `Hola! 💕 Quiero consultar por: ${text}` : "Hola! 💕 Quiero hacer una consulta sobre PRINCESSES_BOX.";
+  updateDailyStats({counters:{whatsappTotal:1}});
   window.open(wspBase+"?text="+encodeURIComponent(msg),"_blank","noopener");
 });
+
+// Consultas generales hacia WhatsApp (sin producto específico).
+document.querySelector(".hero .btn-ghost")?.addEventListener("click",()=>updateDailyStats({counters:{whatsappTotal:1}}));
+document.querySelector(".footer-wsp")?.addEventListener("click",()=>updateDailyStats({counters:{whatsappTotal:1}}));
 
 /* ================= ADMIN ================= */
 const adminFab = document.getElementById("adminFab");
@@ -2270,6 +2537,7 @@ function enterVisualEditor(){
   visualEditorBar?.classList.remove("hidden");
   updateVisualEditorContext();
   renderGrid();
+  renderRecentlyViewed();
   document.getElementById("catalogo")?.scrollIntoView({behavior:"smooth", block:"start"});
 }
 function exitVisualEditor(){
@@ -2281,6 +2549,7 @@ function exitVisualEditor(){
   adminPanelMode = "full";
   resetForm();
   renderGrid();
+  renderRecentlyViewed();
 }
 function checkPin(){
   if(pinInput.value !== ADMIN_PIN){
@@ -2292,6 +2561,7 @@ function checkPin(){
     return;
   }
   pinOverlay.classList.add("hidden");
+  try{ localStorage.setItem(PB_ANALYTICS_ADMIN_DEVICE,"1"); }catch(_){ }
   enterVisualEditor();
 }
 function closeAdminOverlay(){
@@ -2317,6 +2587,7 @@ function openAdmin(mode="full"){
   adminOverlay.classList.toggle("quick-product", mode === "quick");
   fillCategorySelect();
   renderAdminList();
+  renderAttentionPanel();
   renderAdminStats();
   renderCatManager();
   fillTextForm();
@@ -2348,20 +2619,106 @@ function openQuickProductEditor(id="", categoryId=""){
   setTimeout(()=>document.getElementById("fName")?.focus(),80);
 }
 
-function renderAdminStats(){
-  const grid=document.getElementById("adminStatsGrid"), top=document.getElementById("adminTopProducts");
-  if(!grid || !top) return;
-  const available=products.filter(productHasAvailability).length;
-  const sold=products.length-available;
-  const offers=products.filter(p=>p.oferta).length;
-  const news=products.filter(p=>p.nuevo).length;
-  const low=products.filter(p=>{ const n=knownProductStock(p); return productHasAvailability(p) && n!==null && n>0 && n<=4; }).length;
-  const views=products.reduce((a,p)=>a+Number(p.vistasFicha||0),0);
-  const stats=[["Productos",products.length],["Disponibles",available],["Agotados",sold],["Ofertas",offers],["Nuevos",news],["Stock bajo",low],["Vistas de fichas",views]];
-  grid.innerHTML=stats.map(([l,n])=>`<div class="admin-stat-card"><div class="num">${n}</div><div class="lbl">${l}</div></div>`).join("");
-  const ranked=[...products].sort((a,b)=>(Number(b.consultasWhatsApp||0)-Number(a.consultasWhatsApp||0)) || (Number(b.vistasFicha||0)-Number(a.vistasFicha||0))).slice(0,5);
-  top.innerHTML=`<div style="font-size:.76rem;font-weight:650;color:var(--ink);margin-top:12px;">Productos más consultados</div>` + (ranked.length?ranked.map((p,i)=>`<div class="admin-top-row"><span>${i+1}. ${safeText(p.name)}</span><span class="admin-top-metric">💬 ${Number(p.consultasWhatsApp||0)}</span><span class="admin-top-metric">👁️ ${Number(p.vistasFicha||0)}</span></div>`).join(""):`<div class="field-hint">Todavía no hay datos.</div>`);
+function attentionIssuesFor(p){
+  const issues=[];
+  const stock=knownProductStock(p);
+  const toneOut=(p.tones||[]).filter(t=>toneStockValue(p,t)===0).length;
+  if(!productHasAvailability(p)) issues.push({type:"sold",label:"🔴 Agotado"});
+  else if(stock===1) issues.push({type:"low",label:"🟠 Última unidad"});
+  else if(stock!==null && stock>1 && stock<=4) issues.push({type:"low",label:`🟠 Stock bajo (${stock})`});
+  if(!(p.images&&p.images.length)) issues.push({type:"photo",label:"📷 Sin fotografía"});
+  if(Number(p.price||0)<=0) issues.push({type:"price",label:"💲 Sin precio"});
+  if(toneOut>0) issues.push({type:"tones",label:`🎨 ${toneOut} opción${toneOut===1?'':'es'} sin stock`});
+  return issues;
 }
+function renderAttentionPanel(){
+  const summary=document.getElementById("attentionSummary"), counts=document.getElementById("attentionCounts"), list=document.getElementById("attentionList");
+  if(!summary || !counts || !list) return;
+  const rows=products.map(p=>({p,issues:attentionIssuesFor(p)})).filter(x=>x.issues.length);
+  const sold=products.filter(p=>!productHasAvailability(p)).length;
+  const low=products.filter(p=>{const n=knownProductStock(p);return productHasAvailability(p)&&n!==null&&n>0&&n<=4;}).length;
+  const noPhoto=products.filter(p=>!(p.images&&p.images.length)).length;
+  const noPrice=products.filter(p=>Number(p.price||0)<=0).length;
+  const toneOut=products.reduce((s,p)=>s+(p.tones||[]).filter(t=>toneStockValue(p,t)===0).length,0);
+  summary.textContent=rows.length ? `${rows.length} producto${rows.length===1?'':'s'} requieren una revisión.` : "Todo el catálogo está en orden.";
+  counts.innerHTML=[`🔴 ${sold} agotado${sold===1?'':'s'}`,`🟠 ${low} stock bajo`,`📷 ${noPhoto} sin foto`,`💲 ${noPrice} sin precio`,`🎨 ${toneOut} opciones sin stock`].map(x=>`<span class="attention-chip">${safeText(x)}</span>`).join("");
+  list.innerHTML=rows.length ? rows.slice(0,30).map(({p,issues})=>`<div class="attention-row"><div><div class="attention-name">${safeText(p.name)}</div><div class="attention-issues">${issues.map(i=>`<span class="attention-issue">${safeText(i.label)}</span>`).join("")}</div></div><button type="button" class="attention-edit" data-attention-edit="${safeText(p.id)}">✏️ Editar</button></div>`).join("") : `<div class="attention-ok">✅ No hay productos que necesiten atención en este momento.</div>`;
+}
+
+document.getElementById("adminAttentionPanel")?.addEventListener("click",e=>{
+  const b=e.target.closest("[data-attention-edit]"); if(b){ openQuickProductEditor(b.dataset.attentionEdit); return; }
+});
+document.getElementById("attentionRefresh")?.addEventListener("click",renderAttentionPanel);
+
+function periodDayKeys(days){
+  const out=[]; const now=new Date();
+  for(let i=0;i<days;i++){ const d=new Date(now); d.setHours(12,0,0,0); d.setDate(d.getDate()-i); out.push(localDayKey(d)); }
+  return out;
+}
+function mergeMetricMap(target,src){
+  Object.entries(src||{}).forEach(([key,val])=>{ const real=analyticsUnkey(key); target[real]=(target[real]||0)+(Number(val)||0); });
+}
+async function loadAnalyticsPeriod(days){
+  const fb=window.pbFirebase;
+  if(!fb?.getDoc) return null;
+  const keys=periodDayKeys(days);
+  const snaps=await Promise.all(keys.map(day=>fb.getDoc(fb.doc(fb.db,"configuracion",statsDocId(day))).catch(()=>null)));
+  const agg={siteVisits:0,productViewsTotal:0,whatsappTotal:0,sharesTotal:0,orders:0,orderValue:0,visitorIds:new Set(),productViews:{},productWhatsApp:{},productShares:{},categoryViews:{}};
+  snaps.forEach(s=>{
+    if(!s?.exists?.()) return; const x=s.data()||{};
+    ["siteVisits","productViewsTotal","whatsappTotal","sharesTotal","orders","orderValue"].forEach(k=>agg[k]+=Number(x[k]||0));
+    Object.keys(x.visitorIds||{}).forEach(k=>agg.visitorIds.add(analyticsUnkey(k)));
+    mergeMetricMap(agg.productViews,x.productViews);
+    mergeMetricMap(agg.productWhatsApp,x.productWhatsApp);
+    mergeMetricMap(agg.productShares,x.productShares);
+    mergeMetricMap(agg.categoryViews,x.categoryViews);
+  });
+  return agg;
+}
+function rankingRows(map,labelFn,valuePrefix=""){
+  return Object.entries(map||{}).sort((a,b)=>Number(b[1])-Number(a[1])).slice(0,5).map(([id,n])=>({name:labelFn(id),value:`${valuePrefix}${Number(n)||0}`}));
+}
+function rankCard(title,rows){
+  return `<div class="analytics-rank-card"><h4>${safeText(title)}</h4>${rows.length?rows.map((r,i)=>`<div class="analytics-rank-row"><span class="analytics-rank-name">${i+1}. ${safeText(r.name)}</span><span class="analytics-rank-value">${safeText(r.value)}</span></div>`).join(""):`<div class="analytics-empty">Todavía no hay datos en este período.</div>`}</div>`;
+}
+async function renderAdminStats(days=adminStatsPeriod){
+  const grid=document.getElementById("adminStatsGrid"), ranks=document.getElementById("analyticsRankGrid"), status=document.getElementById("analyticsStatus");
+  if(!grid || !ranks) return;
+  adminStatsPeriod=Number(days)||7;
+  document.querySelectorAll("[data-stats-days]").forEach(b=>b.classList.toggle("active",Number(b.dataset.statsDays)===adminStatsPeriod));
+  if(status) status.textContent="Cargando estadísticas…";
+  const low=products.filter(p=>{const n=knownProductStock(p);return productHasAvailability(p)&&n!==null&&n>0&&n<=4;}).length;
+  const sold=products.filter(p=>!productHasAvailability(p)).length;
+  try{
+    const a=await loadAnalyticsPeriod(adminStatsPeriod);
+    if(!a){ if(status)status.textContent="Firebase todavía no está listo."; return; }
+    const unique=a.visitorIds.size;
+    const cards=[
+      ["Visitas al catálogo",a.siteVisits,"cargas de página"],
+      ["Visitantes únicos aprox.",unique,"navegadores/dispositivos"],
+      ["Vistas de fichas",a.productViewsTotal,"aperturas totales"],
+      ["Consultas WhatsApp",a.whatsappTotal,"acciones hacia WhatsApp"],
+      ["Productos compartidos",a.sharesTotal,"acciones de compartir"],
+      ["Pedidos enviados",a.orders,"desde Mi pedido"],
+      ["Valor estimado",fmtPrice(a.orderValue),"pedidos enviados"],
+      ["Stock bajo",low,"estado actual"],
+      ["Agotados",sold,"estado actual"]
+    ];
+    grid.innerHTML=cards.map(([l,n,s],i)=>`<div class="admin-stat-card ${i<7?'emphasis':''}"><div class="num">${typeof n==='number'?n:safeText(n)}</div><div class="lbl">${safeText(l)}</div><div class="sub">${safeText(s)}</div></div>`).join("");
+    const pName=id=>products.find(p=>p.id===id)?.name || id;
+    const cName=id=>catLabel(id) || id;
+    const viewRows=rankingRows(a.productViews,pName,"👁️ ");
+    const wspRows=rankingRows(a.productWhatsApp,pName,"💬 ");
+    const shareRows=rankingRows(a.productShares,pName,"↗ ");
+    const catRows=rankingRows(a.categoryViews,cName,"📂 ");
+    ranks.innerHTML=rankCard("👁️ Productos más vistos",viewRows)+rankCard("💬 Productos más consultados",wspRows)+rankCard("↗ Productos más compartidos",shareRows)+rankCard("📂 Categorías más visitadas",catRows);
+    const periodLabel=adminStatsPeriod===1?"Hoy":`Últimos ${adminStatsPeriod} días`;
+    if(status) status.textContent=`${periodLabel} · datos registrados desde esta versión · visitantes únicos aproximados por navegador/dispositivo.`;
+  }catch(err){ console.error(err); if(status) status.textContent="No se pudieron cargar las estadísticas. Probá Actualizar."; }
+}
+
+document.getElementById("analyticsPeriods")?.addEventListener("click",e=>{ const b=e.target.closest("[data-stats-days]"); if(b) renderAdminStats(Number(b.dataset.statsDays)); });
+document.getElementById("analyticsRefresh")?.addEventListener("click",()=>renderAdminStats(adminStatsPeriod));
 
 function renderAdminList(){
   const list = document.getElementById("adminList");
@@ -2379,7 +2736,7 @@ function renderAdminList(){
         <button class="reorder-btn up" data-id="${p.id}" ${idx===0?'disabled':''} title="Subir">▲</button>
         <button class="reorder-btn down" data-id="${p.id}" ${idx===products.length-1?'disabled':''} title="Bajar">▼</button>
       </div>
-      ${thumb ? `<img src="${thumb}" alt="">` : `<div class="ph">${catIcon(p.category)}</div>`}
+      ${thumb ? `<img src="${safeText(miniImageUrl(thumb))}" alt="" loading="lazy" decoding="async">` : `<div class="ph">${catIcon(p.category)}</div>`}
       <div class="info">
         <div class="n">${p.name} ${p.featured?'⭐':''} ${p.nuevo?'🆕':''} ${p.oferta?'🔥':''} ${count>1?`<span style="color:var(--mauve); font-size:0.72rem;">📷×${count}</span>`:''} ${p.videoId?`<span style="color:var(--mauve); font-size:0.72rem;">🎬 Video</span>`:''} ${(p.tones&&p.tones.length)?`<span style="color:var(--mauve); font-size:0.72rem;">🎨×${p.tones.length}</span>`:''}</div>
         <div class="m">${catLabel(p.category)} · ${fmtPrice(p.price)} · ${productHasAvailability(p)?'Disponible':'Agotado'}${(p.tones&&p.tones.length)?` · ${p.tones.filter(t=>toneIsAvailable(p,t)).length}/${p.tones.length} opciones con stock`:''}</div>
@@ -2664,7 +3021,7 @@ const imgGalleryEl = document.getElementById("imgGallery");
 function renderFormGallery(){
   imgGalleryEl.innerHTML = formImages.map((src,i)=>`
     <div class="img-thumb">
-      <img src="${src}">
+      <img src="${safeText(miniImageUrl(src))}" loading="lazy" decoding="async">
       <button type="button" class="rm" data-i="${i}" title="Quitar">✕</button>
     </div>
   `).join("");
@@ -2852,6 +3209,7 @@ applyTextsToPage();
 renderCatNav();
 renderGrid();
 renderShowcase();
+renderRecentlyViewed();
 renderCart();
 
 function iniciarCategoriasYTextosFirestore(){
@@ -2859,7 +3217,7 @@ function iniciarCategoriasYTextosFirestore(){
   onSnapshot(collection(db,"categorias"), snap => {
     if(!snap.empty){
       categories = snap.docs.map(d=>({id:d.id, ...d.data()})).sort((a,b)=>(a.orden??9999)-(b.orden??9999));
-      renderCatNav(); fillCategorySelect(); renderGrid(); renderAdminList(); renderCatManager();
+      renderCatNav(); fillCategorySelect(); renderGrid(); renderAdminList(); renderCatManager(); renderAttentionPanel(); renderRecentlyViewed();
     }
   }, err=>console.error("Error leyendo categorías:",err));
   onSnapshot(doc(db,"configuracion","sitio"), snap => {
@@ -2875,6 +3233,7 @@ function iniciarCategoriasYTextosFirestore(){
 function iniciarFirebaseCatalogo(){
   iniciarProductosFirestore();
   iniciarCategoriasYTextosFirestore();
+  recordSiteVisit();
 }
 if(window.pbFirebase){ iniciarFirebaseCatalogo(); }
 else{ window.addEventListener("firebase-ready", iniciarFirebaseCatalogo, {once:true}); }
@@ -2882,7 +3241,7 @@ else{ window.addEventListener("firebase-ready", iniciarFirebaseCatalogo, {once:t
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-  import { getFirestore, collection, doc, addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, getDocs, increment } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+  import { getFirestore, collection, doc, addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, getDocs, getDoc, increment } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCU7nR45vIray8yL8T2zm6KI4ESxdTypYaC9A",
@@ -2895,7 +3254,7 @@ else{ window.addEventListener("firebase-ready", iniciarFirebaseCatalogo, {once:t
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-  window.pbFirebase = { db, collection, doc, addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, getDocs, increment };
+  window.pbFirebase = { db, collection, doc, addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, getDocs, getDoc, increment };
   window.dispatchEvent(new Event("firebase-ready"));
 </script>
 
